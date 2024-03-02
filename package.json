@@ -1,0 +1,20 @@
+{
+  "name": "@cakaybox/root",
+  "description": "家計簿管理アプリ「cakaybox」",
+  "private": true,
+  "workspaces": [
+    "packages/common",
+    "packages/backend",
+    "packages/frontend"
+  ],
+  "scripts": {
+    "prepare": "npm run compile",
+    "compile": "tsc -b tsconfig.build.json",
+    "start:dev:api": "npm run start:dev -w @cakaybox/backend",
+    "start:app": "npm run dev -w @cakaybox/frontend"
+  },
+  "dependencies": {
+    "@ts-rest/core": "^3.33.0",
+    "zod": "^3.22.4"
+  }
+}

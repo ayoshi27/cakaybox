@@ -1,0 +1,237 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String?  @unique
+  image     String?
+  role      Role     @default(USER)
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Expend {
+  id              Int           @id @default(autoincrement())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  price           Int
+  description     String
+  date            String
+  category        Category      @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  payer           Payer         @relation(fields: [payerId], references: [id])
+  payerId         Int
+  budget          Budget        @relation(fields: [budgetId], references: [id])
+  budgetId        Int
+  paymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId Int
+  processed       Boolean       @default(false)
+}
+
+model Category {
+  id                               Int                                @id @default(autoincrement())
+  code                             String                             @unique
+  createdAt                        DateTime                           @default(now())
+  updatedAt                        DateTime                           @updatedAt
+  name                             String
+  limit                            Int                                @default(0)
+  Expend                           Expend[]
+  CategoryOnCustomCountingItemTerm CategoryOnCustomCountingItemTerm[]
+  FavoriteExpendItem               FavoriteExpendItem[]
+}
+
+model CategoryOnCustomCountingItemTerm {
+  id                       Int                    @id @default(autoincrement())
+  category                 Category               @relation(fields: [categoryId], references: [id])
+  categoryId               Int
+  customCountingItemTerm   CustomCountingItemTerm @relation(fields: [customCountingItemTermId], references: [id], onDelete: Cascade)
+  customCountingItemTermId Int
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+
+  @@unique([categoryId, customCountingItemTermId])
+}
+
+model Payer {
+  id                            Int                             @id @default(autoincrement())
+  code                          String                          @unique
+  createdAt                     DateTime                        @default(now())
+  updatedAt                     DateTime                        @updatedAt
+  name                          String
+  Expend                        Expend[]
+  PayerCountingItem             PayerOnCountingItem[]
+  PayerOnCustomCountingItemTerm PayerOnCustomCountingItemTerm[]
+  PaymentMethod                 PaymentMethod[]
+  FavoriteExpendItem            FavoriteExpendItem[]
+}
+
+model PayerOnCountingItem {
+  id             Int          @id @default(autoincrement())
+  payer          Payer        @relation(fields: [payerId], references: [id])
+  payerId        Int
+  countingItemId Int
+  countingItem   CountingItem @relation(fields: [countingItemId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([payerId, countingItemId])
+}
+
+model PayerOnCustomCountingItemTerm {
+  id                       Int                    @id @default(autoincrement())
+  payer                    Payer                  @relation(fields: [payerId], references: [id])
+  payerId                  Int
+  customCountingItemTerm   CustomCountingItemTerm @relation(fields: [customCountingItemTermId], references: [id], onDelete: Cascade)
+  customCountingItemTermId Int
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+
+  @@unique([payerId, customCountingItemTermId])
+}
+
+model Budget {
+  id                           Int                              @id @default(autoincrement())
+  code                         String                           @unique
+  createdAt                    DateTime                         @default(now())
+  updatedAt                    DateTime                         @updatedAt
+  name                         String
+  Expend                       Expend[]
+  BudgetOnCountingItem         BudgetOnCountingItem[]
+  BudgetCustomCountingItemTerm BudgetOnCustomCountingItemTerm[]
+  FavoriteExpendItem           FavoriteExpendItem[]
+}
+
+model BudgetOnCountingItem {
+  id             Int          @id @default(autoincrement())
+  budget         Budget       @relation(fields: [budgetId], references: [id])
+  budgetId       Int
+  countingItemId Int
+  countingItem   CountingItem @relation(fields: [countingItemId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([budgetId, countingItemId])
+}
+
+model BudgetOnCustomCountingItemTerm {
+  id                       Int                    @id @default(autoincrement())
+  budget                   Budget                 @relation(fields: [budgetId], references: [id])
+  budgetId                 Int
+  customCountingItemTerm   CustomCountingItemTerm @relation(fields: [customCountingItemTermId], references: [id], onDelete: Cascade)
+  customCountingItemTermId Int
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+
+  @@unique([budgetId, customCountingItemTermId])
+}
+
+model PaymentMethod {
+  id                                  Int                                     @id @default(autoincrement())
+  code                                String                                  @unique
+  createdAt                           DateTime                                @default(now())
+  updatedAt                           DateTime                                @updatedAt
+  name                                String
+  Expend                              Expend[]
+  PaymentMethodCountingItem           PaymentMethodOnCountingItem[]
+  PaymentMethodCustomCountingItemTerm PaymentMethodOnCustomCountingItemTerm[]
+  Payer                               Payer                                   @relation(fields: [payerId], references: [id])
+  payerId                             Int
+  FavoriteExpendItem                  FavoriteExpendItem[]
+}
+
+model PaymentMethodOnCountingItem {
+  id              Int           @id @default(autoincrement())
+  paymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId Int
+  countingItemId  Int
+  countingItem    CountingItem  @relation(fields: [countingItemId], references: [id], onDelete: Cascade)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([paymentMethodId, countingItemId])
+}
+
+model PaymentMethodOnCustomCountingItemTerm {
+  id                       Int                    @id @default(autoincrement())
+  paymentMethod            PaymentMethod          @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId          Int
+  customCountingItemTerm   CustomCountingItemTerm @relation(fields: [customCountingItemTermId], references: [id], onDelete: Cascade)
+  customCountingItemTermId Int
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+
+  @@unique([paymentMethodId, customCountingItemTermId])
+}
+
+model CountingItem {
+  id             Int                           @id @default(autoincrement())
+  createdAt      DateTime                      @default(now())
+  updatedAt      DateTime                      @updatedAt
+  name           String
+  code           String                        @unique
+  processed      Boolean[]                     @default([])
+  paymentMethods PaymentMethodOnCountingItem[]
+  budgets        BudgetOnCountingItem[]
+  payers         PayerOnCountingItem[]
+}
+
+enum Sign {
+  PLUS
+  MINUS
+}
+
+model CustomCountingItemTerm {
+  id                   Int                                     @id @default(autoincrement())
+  sign                 Sign
+  coefficient          Float
+  processed            Boolean[]                               @default([])
+  categories           CategoryOnCustomCountingItemTerm[]
+  paymentMethods       PaymentMethodOnCustomCountingItemTerm[]
+  budgets              BudgetOnCustomCountingItemTerm[]
+  payers               PayerOnCustomCountingItemTerm[]
+  CustomCountingItem   CustomCountingItem?                     @relation(fields: [customCountingItemId], references: [id])
+  customCountingItemId Int?
+}
+
+model CustomCountingItem {
+  id        Int                      @id @default(autoincrement())
+  createdAt DateTime                 @default(now())
+  updatedAt DateTime                 @updatedAt
+  name      String
+  code      String                   @unique
+  terms     CustomCountingItemTerm[]
+}
+
+model FavoriteExpendItem {
+  id              Int           @id @default(autoincrement())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  code            String        @unique
+  name            String
+  price           Int
+  description     String
+  date            String
+  category        Category      @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  payer           Payer         @relation(fields: [payerId], references: [id])
+  payerId         Int
+  budget          Budget        @relation(fields: [budgetId], references: [id])
+  budgetId        Int
+  paymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId Int
+  processed       Boolean       @default(false)
+}

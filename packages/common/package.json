@@ -1,0 +1,13 @@
+{
+  "name": "@cakaybox/common",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ayoshi27 <yoshii27.bu@gmail.com> (https://example.com/)",
+  "license": "UNLICENSED"
+}
