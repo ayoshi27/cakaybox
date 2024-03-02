@@ -29,6 +29,7 @@ export class ExpendService {
           select: {
             id: true,
             name: true,
+            colorCode: true,
           },
         },
         payer: {

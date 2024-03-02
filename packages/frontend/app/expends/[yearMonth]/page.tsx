@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import styles from "./expends.module.scss";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ControlPanel from "./components/control-panel/ControlPanel";
 import { useDialog } from "../../shared/dialog";
 import { FilterCondition, UpdateDialogFormValue } from "./page.type";
@@ -338,8 +339,8 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
                             isSunday(dayjs(expend.date))
                               ? styles.isSunday
                               : isSaturday(dayjs(expend.date))
-                              ? styles.isSaturday
-                              : "",
+                                ? styles.isSaturday
+                                : "",
                           ].join(" ")}
                         >
                           {dayjs(expend.date).format("MM/DD(dd)")}
@@ -398,15 +399,25 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
                             isSunday(dayjs(expend.date))
                               ? styles.isSunday
                               : isSaturday(dayjs(expend.date))
-                              ? styles.isSaturday
-                              : ""
+                                ? styles.isSaturday
+                                : ""
                           }
                         >
                           {dayjs(expend.date).format("MM/DD(dd)")}
                         </td>
                         <td>{formatPrice(expend.price)}</td>
                         <td>{expend.description}</td>
-                        <td>{expend.category.name}</td>
+                        <td className={styles.categoryCell}>
+                          <div>
+                            <LocalOfferIcon
+                              style={{
+                                color:
+                                  `#${expend.category.colorCode}` || "inherit",
+                              }}
+                            ></LocalOfferIcon>
+                            {expend.category.name}
+                          </div>
+                        </td>
                         <td>{expend.payer.name}</td>
                         <td>{expend.paymentMethod.name}</td>
                         <td>{expend.budget.name}</td>

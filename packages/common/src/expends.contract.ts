@@ -9,6 +9,7 @@ const ExpendSchema = z.object({
   category: z.object({
     id: z.number(),
     name: z.string(),
+    colorCode: z.string().nullable(),
   }),
   payer: z.object({
     id: z.number(),

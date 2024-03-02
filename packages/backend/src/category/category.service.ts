@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { Category, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class CategoryService {
@@ -16,7 +16,7 @@ export class CategoryService {
     cursor?: Prisma.CategoryWhereUniqueInput;
     where?: Prisma.CategoryWhereInput;
     orderBy?: Prisma.CategoryOrderByWithRelationInput;
-  }): Promise<Category[]> {
+  }) {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.category.findMany({
       skip,

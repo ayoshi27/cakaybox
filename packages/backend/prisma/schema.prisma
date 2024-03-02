@@ -49,6 +49,7 @@ model Category {
   updatedAt                        DateTime                           @updatedAt
   name                             String
   limit                            Int                                @default(0)
+  colorCode                        String?
   Expend                           Expend[]
   CategoryOnCustomCountingItemTerm CategoryOnCustomCountingItemTerm[]
   FavoriteExpendItem               FavoriteExpendItem[]
