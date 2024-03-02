@@ -7,14 +7,17 @@ export declare const categoriesContract: {
                 id: z.ZodNumber;
                 name: z.ZodString;
                 limit: z.ZodNumber;
+                colorCode: z.ZodNullable<z.ZodString>;
             }, "strip", z.ZodTypeAny, {
                 id: number;
                 name: string;
                 limit: number;
+                colorCode: string | null;
             }, {
                 id: number;
                 name: string;
                 limit: number;
+                colorCode: string | null;
             }>, "many">;
         };
         method: "GET";

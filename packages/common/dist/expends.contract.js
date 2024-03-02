@@ -11,6 +11,7 @@ const ExpendSchema = zod_1.z.object({
     category: zod_1.z.object({
         id: zod_1.z.number(),
         name: zod_1.z.string(),
+        colorCode: zod_1.z.string().nullable(),
     }),
     payer: zod_1.z.object({
         id: zod_1.z.number(),

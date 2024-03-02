@@ -5,6 +5,7 @@ const CategorySchema = z.object({
   id: z.number(),
   name: z.string(),
   limit: z.number(),
+  colorCode: z.string().nullable(),
 });
 
 const c = initContract();

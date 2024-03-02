@@ -18,12 +18,15 @@ export declare const expendsContract: {
                 category: z.ZodObject<{
                     id: z.ZodNumber;
                     name: z.ZodString;
+                    colorCode: z.ZodNullable<z.ZodString>;
                 }, "strip", z.ZodTypeAny, {
                     id: number;
                     name: string;
+                    colorCode: string | null;
                 }, {
                     id: number;
                     name: string;
+                    colorCode: string | null;
                 }>;
                 payer: z.ZodObject<{
                     id: z.ZodNumber;
@@ -76,6 +79,7 @@ export declare const expendsContract: {
                 category: {
                     id: number;
                     name: string;
+                    colorCode: string | null;
                 };
                 price: number;
             }, {
@@ -98,6 +102,7 @@ export declare const expendsContract: {
                 category: {
                     id: number;
                     name: string;
+                    colorCode: string | null;
                 };
                 price: number;
             }>, "many">;

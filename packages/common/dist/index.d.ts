@@ -18,12 +18,15 @@ export declare const contract: {
                     category: import("zod").ZodObject<{
                         id: import("zod").ZodNumber;
                         name: import("zod").ZodString;
+                        colorCode: import("zod").ZodNullable<import("zod").ZodString>;
                     }, "strip", import("zod").ZodTypeAny, {
                         id: number;
                         name: string;
+                        colorCode: string | null;
                     }, {
                         id: number;
                         name: string;
+                        colorCode: string | null;
                     }>;
                     payer: import("zod").ZodObject<{
                         id: import("zod").ZodNumber;
@@ -76,6 +79,7 @@ export declare const contract: {
                     category: {
                         id: number;
                         name: string;
+                        colorCode: string | null;
                     };
                     price: number;
                 }, {
@@ -98,6 +102,7 @@ export declare const contract: {
                     category: {
                         id: number;
                         name: string;
+                        colorCode: string | null;
                     };
                     price: number;
                 }>, "many">;
@@ -287,14 +292,17 @@ export declare const contract: {
                     id: import("zod").ZodNumber;
                     name: import("zod").ZodString;
                     limit: import("zod").ZodNumber;
+                    colorCode: import("zod").ZodNullable<import("zod").ZodString>;
                 }, "strip", import("zod").ZodTypeAny, {
                     id: number;
                     name: string;
                     limit: number;
+                    colorCode: string | null;
                 }, {
                     id: number;
                     name: string;
                     limit: number;
+                    colorCode: string | null;
                 }>, "many">;
             };
             method: "GET";

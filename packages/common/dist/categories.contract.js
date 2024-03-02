@@ -7,6 +7,7 @@ const CategorySchema = zod_1.z.object({
     id: zod_1.z.number(),
     name: zod_1.z.string(),
     limit: zod_1.z.number(),
+    colorCode: zod_1.z.string().nullable(),
 });
 const c = (0, core_1.initContract)();
 exports.categoriesContract = c.router({
