@@ -1,5 +1,6 @@
 /** 支出一覧のフィルター条件 */
 export type FilterCondition = {
+  searchWord: string;
   categoryIdList: number[];
   budgetIdList: number[];
   paymentMethodIdList: number[];

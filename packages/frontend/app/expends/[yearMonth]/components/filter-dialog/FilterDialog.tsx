@@ -29,6 +29,7 @@ export default function FilterDialog(props: {
     applyFilterConditions,
   } = props;
 
+  const [searchWord, setSearchWord] = useState<string>(initialValue.searchWord);
   const [categoryIdList, setCategoryIdList] = useState<number[]>(
     initialValue.categoryIdList
   );
@@ -45,6 +46,7 @@ export default function FilterDialog(props: {
   /** 表示ボタンを押した時の処理 */
   function handleDisplayButton(): void {
     applyFilterConditions({
+      searchWord: searchWord,
       categoryIdList: categoryIdList,
       budgetIdList: budgetIdList,
       paymentMethodIdList: paymentMethodIdList,
@@ -83,6 +85,16 @@ export default function FilterDialog(props: {
   return (
     <Dialog isLoading={isLoading}>
       <h2 className={styles.dialogTitle}>支出を絞り込んで表示する</h2>
+
+      <div className={styles.formItem}>
+        フリーワード:
+        <input
+          type="text"
+          className={styles.inputText}
+          onChange={(e) => setSearchWord(e.currentTarget.value)}
+          value={searchWord}
+        />
+      </div>
 
       <div className={styles.formItem}>
         カテゴリー:

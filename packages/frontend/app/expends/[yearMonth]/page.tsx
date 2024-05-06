@@ -65,6 +65,7 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
     });
 
   const [filterConditions, setFilterConditions] = useState<FilterCondition>({
+    searchWord: "",
     categoryIdList: [],
     budgetIdList: [],
     paymentMethodIdList: [],
@@ -80,6 +81,8 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
 
   /**フィルターで指定した条件で絞り込まれた支出レコードリスト */
   const filteredExpends = expends?.filter((expend) => {
+    const isSearchWordMatched =
+      expend.description.includes(filterConditions.searchWord);
     const isCategoryMatched =
       filterConditions.categoryIdList.length === 0 ||
       filterConditions.categoryIdList.includes(expend.category.id);
@@ -93,6 +96,7 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
       filterConditions.isProcessedList.length === 0 ||
       filterConditions.isProcessedList.includes(expend.processed);
     return (
+      isSearchWordMatched &&
       isCategoryMatched &&
       isBudgetMatched &&
       isPaymentMethodMatched &&
@@ -173,6 +177,7 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
    */
   function resetFilterConditions(): void {
     setFilterConditions({
+      searchWord: "",
       categoryIdList: [],
       budgetIdList: [],
       paymentMethodIdList: [],
