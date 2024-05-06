@@ -110,6 +110,18 @@
     text-align: right;
   }
 }
+.processedCell {
+  > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  svg {
+    width: 20px;
+  }
+}
 .categoryCell > div {
   display: flex;
   justify-content: flex-start;

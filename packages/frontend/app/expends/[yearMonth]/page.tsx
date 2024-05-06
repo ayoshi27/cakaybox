@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import styles from "./expends.module.scss";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ControlPanel from "./components/control-panel/ControlPanel";
 import { useDialog } from "../../shared/dialog";
@@ -421,7 +422,15 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
                         <td>{expend.payer.name}</td>
                         <td>{expend.paymentMethod.name}</td>
                         <td>{expend.budget.name}</td>
-                        <td>{expend.processed ? "済" : "未"}</td>
+                        <td className={styles.processedCell}>
+                          <div>
+                            {expend.processed ? (
+                              <CheckCircleIcon color="success" />
+                            ) : (
+                              <CheckCircleIcon color="disabled" />
+                            )}
+                          </div>
+                        </td>
                         <td>
                           <button
                             className={styles.tableButton}
