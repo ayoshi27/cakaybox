@@ -7,50 +7,58 @@ async function main() {
   //   data: [
   //     {
   //       email: `dayoshii27@gmail.com`,
-  //       role: "ADMIN",
+  //       role: 'ADMIN',
   //     },
   //     {
   //       email: `yayr1015@gmail.com`,
-  //       role: "USER",
+  //       role: 'USER',
   //     },
-  //   ]
+  //   ],
+  // });
+  // await prisma.category.update({
+  //   where: {
+  //     id: 1,
+  //   },
+  //   data: {
+  //     name: '食費',
+  //   },
   // });
   // await prisma.category.createMany({
   //   data: [
   //     { name: '自動車維持費', code: 'car' },
-  //     // { name: "雑貨", code: "goods" },
-  //     // { name: "お小遣い", code: "personal" },
-  //     // { name: "その他", code: "others" },
-  //     // { name: "貯金", code: "savings" },
-  //     // { name: "旅行", code: "travel" },
-  //     // { name: "イベント", code: "event" },
-  //     // { name: "毎月", code: "monthly" },
-  //     // { name: "電気代", code: "electric" },
-  //     // { name: "水道ガス", code: "utility" },
-  //     // { name: "ちばぎん", code: "chibagin" },
+  //     { name: '雑貨', code: 'goods' },
+  //     { name: 'お小遣い', code: 'personal' },
+  //     { name: 'その他', code: 'others' },
+  //     { name: '貯金', code: 'savings' },
+  //     { name: '旅行', code: 'travel' },
+  //     { name: 'イベント', code: 'event' },
+  //     { name: '毎月', code: 'monthly' },
+  //     { name: '電気代', code: 'electric' },
+  //     { name: '水道ガス', code: 'utility' },
+  //     { name: 'ちばぎん', code: 'chibagin' },
   //   ],
   // });
   // await prisma.budget.createMany({
   //   data: [
-  //     { name: "共同支出", code: "shared" },
-  //     { name: "明弘個人", code: "akihiro" },
-  //     { name: "李沙個人", code: "risa" },
+  //     { name: '共同支出', code: 'shared' },
+  //     { name: '明弘個人', code: 'akihiro' },
+  //     { name: '李沙個人', code: 'risa' },
   //   ],
   // });
   // await prisma.paymentMethod.createMany({
   //   data: [
-  //     { name: "VISA（8119）", code: "visa8119" },
-  //     { name: "JCB（1323）", code: "jcb1323" },
-  //     { name: "明弘現金", code: "cash-akihiro" },
-  //     { name: "李沙現金", code: "cash-risa" },
-  //     { name: "みずほ振替", code: "mizuho" },
-  //     { name: "ちば銀行振替", code: "chibagin" },
+  //     { name: 'VISA（8119）', code: 'visa8119', payerId: 1 },
+  //     { name: 'JCB（1323）', code: 'jcb1323', payerId: 1 },
+  //     { name: '明弘現金', code: 'cash-akihiro', payerId: 1 },
+  //     { name: '李沙現金', code: 'cash-risa', payerId: 2 },
+  //     { name: 'みずほ振替', code: 'mizuho', payerId: 1 },
+  //     { name: 'ちば銀行振替', code: 'chibagin', payerId: 1 },
   //   ],
   // });
   // await prisma.payer.createMany({
   //   data: [
-  //     { name: "明弘", code: "akihiro" },
-  //     { name: "李沙", code: "risa" },
+  //     { name: '明弘', code: 'akihiro' },
+  //     { name: '李沙', code: 'risa' },
   //   ],
   // });
   // await prisma.expend.createMany({
@@ -58,7 +66,7 @@ async function main() {
   //     {
   //       date: '2023-11-02',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 2,
   //       budgetId: 1,
   //       paymentMethodId: 1,
@@ -67,7 +75,7 @@ async function main() {
   //     {
   //       date: '2023-11-03',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 3,
   //       budgetId: 1,
   //       paymentMethodId: 1,
@@ -76,7 +84,7 @@ async function main() {
   //     {
   //       date: '2023-11-04',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 4,
   //       budgetId: 1,
   //       paymentMethodId: 1,
@@ -85,7 +93,7 @@ async function main() {
   //     {
   //       date: '2023-11-05',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 5,
   //       budgetId: 1,
   //       paymentMethodId: 1,
@@ -94,7 +102,7 @@ async function main() {
   //     {
   //       date: '2023-11-06',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 6,
   //       budgetId: 1,
   //       paymentMethodId: 1,
@@ -103,7 +111,7 @@ async function main() {
   //     {
   //       date: '2023-11-07',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 7,
   //       budgetId: 1,
   //       paymentMethodId: 1,
@@ -112,7 +120,7 @@ async function main() {
   //     {
   //       date: '2023-11-08',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 8,
   //       budgetId: 1,
   //       paymentMethodId: 1,
@@ -121,7 +129,7 @@ async function main() {
   //     {
   //       date: '2023-11-09',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 9,
   //       budgetId: 1,
   //       paymentMethodId: 1,
@@ -130,7 +138,7 @@ async function main() {
   //     {
   //       date: '2023-11-10',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 10,
   //       budgetId: 1,
   //       paymentMethodId: 1,
@@ -139,14 +147,14 @@ async function main() {
   //     {
   //       date: '2023-11-11',
   //       price: 1000,
-  //       description: "test",
+  //       description: 'test',
   //       categoryId: 11,
   //       budgetId: 1,
   //       paymentMethodId: 1,
   //       payerId: 1,
   //     },
-  //   ]
-  // })
+  //   ],
+  // });
   // await prisma.countingItem.create({
   //   data: {
   //     name: 'サンプル集計項目1（共同visa明弘）',
@@ -529,12 +537,12 @@ async function main() {
   //     id: 3,
   //   },
   //   data: {
-  //     name: "月次精算用（明弘）",
-  //     code: "monthly-akihiro",
+  //     name: '月次精算用（明弘）',
+  //     code: 'monthly-akihiro',
   //     terms: {
   //       update: [
   //         {
-  //           sign: "PLUS",
+  //           sign: 'PLUS',
   //           coefficient: 1,
   //           processed: [true, false],
   //           categories: {
@@ -679,12 +687,12 @@ async function main() {
   // });
   // await prisma.customCountingItem.create({
   //   data: {
-  //     name: "月次精算用（明弘）",
-  //     code: "monthly-akihiro",
+  //     name: '月次精算用（明弘）',
+  //     code: 'monthly-akihiro',
   //     terms: {
   //       create: [
   //         {
-  //           sign: "PLUS",
+  //           sign: 'PLUS',
   //           coefficient: 1,
   //           processed: [true, false],
   //           categories: {
@@ -822,12 +830,12 @@ async function main() {
   // });
   // await prisma.customCountingItem.create({
   //   data: {
-  //     name: "月次精算用（李沙）",
-  //     code: "monthly-risa",
+  //     name: '月次精算用（李沙）',
+  //     code: 'monthly-risa',
   //     terms: {
   //       create: [
   //         {
-  //           sign: "PLUS",
+  //           sign: 'PLUS',
   //           coefficient: 1,
   //           processed: [true, false],
   //           categories: {
@@ -937,12 +945,13 @@ async function main() {
   // });
   // await prisma.customCountingItem.create({
   //   data: {
-  //     name: "李沙→明弘",
-  //     code: "risa-to-akihiro",
+  //     name: '李沙→明弘',
+  //     code: 'risa-to-akihiro',
   //     terms: {
   //       create: [
-  //         { // NOTE: 明弘が払った共同支出の1/2
-  //           sign: "PLUS",
+  //         {
+  //           // NOTE: 明弘が払った共同支出の1/2
+  //           sign: 'PLUS',
   //           coefficient: 0.5,
   //           processed: [true, false],
   //           categories: {
@@ -1018,8 +1027,9 @@ async function main() {
   //             ],
   //           },
   //         },
-  //         { // NOTE: 李沙が払った共同支出の1/2
-  //           sign: "MINUS",
+  //         {
+  //           // NOTE: 李沙が払った共同支出の1/2
+  //           sign: 'MINUS',
   //           coefficient: 0.5,
   //           processed: [true, false],
   //           categories: {
@@ -1067,8 +1077,9 @@ async function main() {
   //             ],
   //           },
   //         },
-  //         { // NOTE: 明弘が払った李沙の個人支出（服一緒に買う時とか）
-  //           sign: "PLUS",
+  //         {
+  //           // NOTE: 明弘が払った李沙の個人支出（服一緒に買う時とか）
+  //           sign: 'PLUS',
   //           coefficient: 1,
   //           processed: [false],
   //           categories: {
@@ -1148,49 +1159,49 @@ async function main() {
   //     },
   //   },
   // });
-  await prisma.favoriteExpendItem.createMany({
-    data: [
-      {
-        id: 0,
-        date: '',
-        code: 'aeonfood',
-        name: 'イオン食材',
-        price: 0,
-        description: 'イオン',
-        categoryId: 1,
-        payerId: 1,
-        budgetId: 1,
-        paymentMethodId: 1,
-        processed: false,
-      },
-      {
-        id: 1,
-        date: '',
-        code: 'akihiro7',
-        name: '明弘７',
-        price: 0,
-        description: '7:',
-        categoryId: 3,
-        payerId: 1,
-        budgetId: 2,
-        paymentMethodId: 1,
-        processed: false,
-      },
-      {
-        id: 2,
-        date: '',
-        code: 'akihiroprivate',
-        name: '明弘個人',
-        price: 0,
-        description: '',
-        categoryId: 3,
-        payerId: 1,
-        budgetId: 2,
-        paymentMethodId: 1,
-        processed: false,
-      },
-    ],
-  });
+  // await prisma.favoriteExpendItem.createMany({
+  //   data: [
+  //     {
+  //       id: 0,
+  //       date: '',
+  //       code: 'aeonfood',
+  //       name: 'イオン食材',
+  //       price: 0,
+  //       description: 'イオン',
+  //       categoryId: 1,
+  //       payerId: 1,
+  //       budgetId: 1,
+  //       paymentMethodId: 1,
+  //       processed: false,
+  //     },
+  //     {
+  //       id: 1,
+  //       date: '',
+  //       code: 'akihiro7',
+  //       name: '明弘７',
+  //       price: 0,
+  //       description: '7:',
+  //       categoryId: 3,
+  //       payerId: 1,
+  //       budgetId: 2,
+  //       paymentMethodId: 1,
+  //       processed: false,
+  //     },
+  //     {
+  //       id: 2,
+  //       date: '',
+  //       code: 'akihiroprivate',
+  //       name: '明弘個人',
+  //       price: 0,
+  //       description: '',
+  //       categoryId: 3,
+  //       payerId: 1,
+  //       budgetId: 2,
+  //       paymentMethodId: 1,
+  //       processed: false,
+  //     },
+  //   ],
+  // });
   // await prisma.countingItem.create({
   //   data: {
   //     name: '共同支出（明弘支払）',
