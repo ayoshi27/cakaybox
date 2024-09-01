@@ -18,7 +18,9 @@ export class CategoryController implements NestControllerInterface<typeof c> {
   async getList() {
     return {
       status: 200 as const,
-      body: await this.categoryService.getList({}),
+      body: await this.categoryService.getList({
+        orderBy: { id: 'asc' },
+      }),
     };
   }
 }
