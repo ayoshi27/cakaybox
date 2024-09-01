@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import styles from "./addExpendsDialog.module.scss";
 import { useState } from "react";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { DialogType } from "@/app/shared/dialog";
 import { Categories } from "@/app/shared/hooks/useAllCategoriesQuery";
 import { Payers } from "@/app/shared/hooks/useAllPayersQuery";
@@ -106,6 +107,15 @@ export default function AddExpendsDialog(props: {
       {isSelectingFavorite ? (
         <div>
           <div className={styles.dialogHeader}>
+            <button
+              className={styles.backButton}
+              onClick={() => {
+                setIsSelectingFavorite(!isSelectingFavorite);
+              }}
+            >
+              <ArrowBackIcon color="primary" />
+              <span>戻る</span>
+            </button>
             <h2 className={styles.dialogTitle}>
               <FavoriteIcon color="primary" />
               <span>お気に入り支出を選択</span>
