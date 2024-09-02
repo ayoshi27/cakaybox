@@ -40,12 +40,19 @@ export const Dialog: React.FC<Props> = ({
     onClose();
   }, [onClose]);
 
+  const handleKyeDown = (e: React.KeyboardEvent<HTMLDialogElement>): void => {
+    if (e.key === "Escape") {
+      onClose();
+    }
+  };
+
   return (
     <RemoveScroll removeScrollBar enabled={isOpen}>
       <dialog
         className={styles["dialog"]}
         ref={dialogRef}
         onClick={handleClickDialog}
+        onKeyDown={(e) => handleKyeDown(e)}
       >
         {isLoading && (
           <div
