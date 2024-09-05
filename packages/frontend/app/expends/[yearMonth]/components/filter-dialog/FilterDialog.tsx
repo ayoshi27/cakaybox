@@ -82,8 +82,17 @@ export default function FilterDialog(props: {
     setIsProcessedList(newValue);
   }
 
+  /** ダイアログ内フォームの初期値をセットする */
+  function setiInitialValue(): void {
+    setCategoryIdList(initialValue.categoryIdList);
+    setBudgetIdList(initialValue.budgetIdList);
+    setPaymentMethodIdList(initialValue.paymentMethodIdList);
+    setIsProcessedList(initialValue.isProcessedList);
+    setSearchWord(initialValue.searchWord);
+  }
+
   return (
-    <Dialog isLoading={isLoading}>
+    <Dialog isLoading={isLoading} onDialogOpen={setiInitialValue}>
       <h2 className={styles.dialogTitle}>支出を絞り込んで表示する</h2>
 
       <div className={styles.formItem}>

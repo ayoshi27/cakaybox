@@ -53,7 +53,7 @@ export default function AddExpendsDialog(props: {
   const [isProcessed, setIsProcessed] = useState(false);
 
   /** 保存ボタンを押した時の処理 */
-  function handleSaveButton(): void {
+  function handleSaveAction(): void {
     addExpend({
       date,
       price: Number(price),
@@ -103,7 +103,7 @@ export default function AddExpendsDialog(props: {
   }
 
   return (
-    <Dialog isLoading={isLoading}>
+    <Dialog isLoading={isLoading} onMetaKeyEnter={handleSaveAction}>
       {isSelectingFavorite ? (
         <div>
           <div className={styles.dialogHeader}>
@@ -243,7 +243,7 @@ export default function AddExpendsDialog(props: {
             </label>
           </div>
 
-          <button className={styles.saveButton} onClick={handleSaveButton}>
+          <button className={styles.saveButton} onClick={handleSaveAction}>
             追加
           </button>
         </div>

@@ -81,8 +81,9 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
 
   /**フィルターで指定した条件で絞り込まれた支出レコードリスト */
   const filteredExpends = expends?.filter((expend) => {
-    const isSearchWordMatched =
-      expend.description.includes(filterConditions.searchWord);
+    const isSearchWordMatched = expend.description.includes(
+      filterConditions.searchWord
+    );
     const isCategoryMatched =
       filterConditions.categoryIdList.length === 0 ||
       filterConditions.categoryIdList.includes(expend.category.id);
@@ -176,7 +177,7 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
    * フィルター条件をリセットする
    */
   function resetFilterConditions(): void {
-    setFilterConditions({
+    applyFilterConditions({
       searchWord: "",
       categoryIdList: [],
       budgetIdList: [],

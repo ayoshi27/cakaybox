@@ -8,6 +8,8 @@ type Props = {
   isLoading: boolean;
   children: React.ReactNode | React.ReactNode[];
   onClose: VoidFunction;
+  onMetaKeyEnter?: VoidFunction;
+  onDialogOpen?: VoidFunction;
 };
 
 export const Dialog: React.FC<Props> = ({
@@ -15,6 +17,8 @@ export const Dialog: React.FC<Props> = ({
   isLoading,
   children,
   onClose,
+  onMetaKeyEnter,
+  onDialogOpen,
 }): React.ReactElement | null => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -24,14 +28,11 @@ export const Dialog: React.FC<Props> = ({
       return;
     }
     if (isOpen) {
-      if (dialogElement.hasAttribute("open")) {
-        return;
-      }
+      if (dialogElement.hasAttribute("open")) return;
+      onDialogOpen && onDialogOpen();
       dialogElement.showModal();
     } else {
-      if (!dialogElement.hasAttribute("open")) {
-        return;
-      }
+      if (!dialogElement.hasAttribute("open")) return;
       dialogElement.close();
     }
   }, [isOpen]);
@@ -43,6 +44,9 @@ export const Dialog: React.FC<Props> = ({
   const handleKyeDown = (e: React.KeyboardEvent<HTMLDialogElement>): void => {
     if (e.key === "Escape") {
       onClose();
+    }
+    if (e.metaKey && e.key === "Enter") {
+      onMetaKeyEnter && onMetaKeyEnter();
     }
   };
 
