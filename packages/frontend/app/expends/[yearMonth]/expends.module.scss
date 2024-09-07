@@ -43,6 +43,16 @@
     background: darken(#f9f9f9, 10);
   }
 }
+.filterButtonActive {
+  --backgroundColor: color-mix(in srgb, #145ca4 15%, transparent);
+
+  @include button();
+  background-color: var(--backgroundColor);
+
+  &:hover {
+    --backgroundColor: color-mix(in srgb, #145ca4 25%, transparent);
+  }
+}
 
 .tableWrapper {
   width: 100%;

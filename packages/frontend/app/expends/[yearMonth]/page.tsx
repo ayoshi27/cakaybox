@@ -6,8 +6,9 @@ import "dayjs/locale/ja";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 import styles from "./expends.module.scss";
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ControlPanel from "./components/control-panel/ControlPanel";
@@ -71,6 +72,17 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
     paymentMethodIdList: [],
     isProcessedList: [],
   });
+
+  /** filterConditionsが初期値と同じならfalse、そうでなければtrue */
+  const isFiltered =
+    JSON.stringify(filterConditions) !==
+    JSON.stringify({
+      searchWord: "",
+      categoryIdList: [],
+      budgetIdList: [],
+      paymentMethodIdList: [],
+      isProcessedList: [],
+    });
 
   const {
     data: expends,
@@ -317,12 +329,25 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
               className={styles.filterButton}
               onClick={resetFilterConditions}
             >
-              <FilterAltOffIcon color="primary" fontSize="small" />
+              <FilterAltOffOutlinedIcon color="primary" fontSize="small" />
             </button>
-            <button className={styles.filterButton} onClick={openFilterDialog}>
-              <FilterAltIcon color="primary" fontSize="small" />
-              フィルター
-            </button>
+            {isFiltered ? (
+              <button
+                className={styles.filterButtonActive}
+                onClick={openFilterDialog}
+              >
+                <FilterAltIcon color="primary" fontSize="small" />
+                フィルター
+              </button>
+            ) : (
+              <button
+                className={styles.filterButton}
+                onClick={openFilterDialog}
+              >
+                <FilterAltOutlinedIcon color="primary" fontSize="small" />
+                フィルター
+              </button>
+            )}
           </div>
         </div>
         {isLoadingExpends ? (
