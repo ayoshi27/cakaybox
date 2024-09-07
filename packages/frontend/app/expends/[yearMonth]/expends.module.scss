@@ -70,10 +70,17 @@
   justify-content: space-between;
   align-items: center;
 }
-.filterButtonContainer {
+.filterContainer {
   display: flex;
   align-items: center;
+  gap: 16px;
+}
+.filterButtonsContainer {
+  display: flex;
   gap: 8px;
+}
+.sumPriceLabel {
+  font-size: 13px;
 }
 .expendsTable th {
   position: sticky;

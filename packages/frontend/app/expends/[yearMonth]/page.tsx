@@ -117,6 +117,15 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
     );
   });
 
+  /**支出の合計金額を算出する */
+  const getSumPrice = (argExpends: typeof expends) => {
+    return (
+      argExpends?.reduce((acc: number, expend) => acc + expend.price, 0) || 0
+    );
+  };
+  //**フィルター後の支出の合計金額 */
+  const sumPriceForFilteredExpends = formatPrice(getSumPrice(filteredExpends));
+
   const {
     data: budgets,
     isLoading: loadingBudgets,
@@ -324,30 +333,40 @@ export default function Expends({ params }: { params: { yearMonth: string } }) {
           >
             支出追加
           </button>
-          <div className={styles.filterButtonContainer}>
-            <button
-              className={styles.filterButton}
-              onClick={resetFilterConditions}
-            >
-              <FilterAltOffOutlinedIcon color="primary" fontSize="small" />
-            </button>
-            {isFiltered ? (
-              <button
-                className={styles.filterButtonActive}
-                onClick={openFilterDialog}
-              >
-                <FilterAltIcon color="primary" fontSize="small" />
-                フィルター
-              </button>
-            ) : (
+          <div className={styles.filterContainer}>
+            {isMobileDevice() ? null : (
+              <div>
+                <span className={styles.sumPriceLabel}>
+                  表示中支出の料金合計：{" "}
+                </span>
+                <span>{sumPriceForFilteredExpends}</span>
+              </div>
+            )}
+            <div className={styles.filterButtonsContainer}>
               <button
                 className={styles.filterButton}
-                onClick={openFilterDialog}
+                onClick={resetFilterConditions}
               >
-                <FilterAltOutlinedIcon color="primary" fontSize="small" />
-                フィルター
+                <FilterAltOffOutlinedIcon color="primary" fontSize="small" />
               </button>
-            )}
+              {isFiltered ? (
+                <button
+                  className={styles.filterButtonActive}
+                  onClick={openFilterDialog}
+                >
+                  <FilterAltIcon color="primary" fontSize="small" />
+                  フィルター
+                </button>
+              ) : (
+                <button
+                  className={styles.filterButton}
+                  onClick={openFilterDialog}
+                >
+                  <FilterAltOutlinedIcon color="primary" fontSize="small" />
+                  フィルター
+                </button>
+              )}
+            </div>
           </div>
         </div>
         {isLoadingExpends ? (
