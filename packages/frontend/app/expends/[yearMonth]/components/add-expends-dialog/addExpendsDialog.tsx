@@ -107,15 +107,6 @@ export default function AddExpendsDialog(props: {
       {isSelectingFavorite ? (
         <div>
           <div className={styles.dialogHeader}>
-            <button
-              className={styles.backButton}
-              onClick={() => {
-                setIsSelectingFavorite(!isSelectingFavorite);
-              }}
-            >
-              <ArrowBackIcon color="primary" />
-              <span>戻る</span>
-            </button>
             <h2 className={styles.dialogTitle}>
               <FavoriteIcon color="primary" />
               <span>お気に入り支出を選択</span>
@@ -141,6 +132,17 @@ export default function AddExpendsDialog(props: {
               </li>
             ))}
           </ul>
+          <div className={styles.dialogFooter}>
+            <button
+              className={styles.backButton}
+              onClick={() => {
+                setIsSelectingFavorite(!isSelectingFavorite);
+              }}
+            >
+              <ArrowBackIcon color="primary" />
+              <span>戻る</span>
+            </button>
+          </div>
         </div>
       ) : (
         <div>
