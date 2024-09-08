@@ -97,4 +97,20 @@ export class ExpendController implements NestControllerInterface<typeof c> {
       body: { message: 'expend successfully Deleted' },
     };
   }
+
+  @TsRest(c.getAnnualCalculatedExpend)
+  async getAnnualCalculatedExpend(
+    @TsRestRequest()
+    { query: { year } }: RequestShapes['getAnnualCalculatedExpend'],
+  ) {
+    const where = {
+      date: {
+        startsWith: year,
+      },
+    };
+    return {
+      status: 200 as const,
+      body: await this.expendService.getAnnualCalculatedExpend({ where }),
+    };
+  }
 }

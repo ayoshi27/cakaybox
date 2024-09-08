@@ -27,11 +27,12 @@ td {
   white-space: nowrap;
 }
 th {
-  position: relative;
   text-align: left;
   font-weight: bold;
   height: 56px;
-
+  & + th {
+    position: relative;
+  }
   & + th::after {
     content: "";
     display: block;

@@ -1,0 +1,25 @@
+.contentsContainer {
+  padding: 20px;
+  background: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 7px;
+  border-radius: 5px;
+
+  @media screen and (max-width: 400px) {
+    padding: 15px 10px;
+  }
+}
+.annualTableWrapper {
+  width: 100%;
+  height: calc(100dvh - 40px - 8px - 40px - 60px - 103px);
+  overflow: auto;
+  font-size: 14px;
+  margin-top: 8px;
+}
+.annualTable {
+  font-size: 14px;
+}
+.annualTable thead th {
+  position: sticky;
+  top: 0;
+  background: #fff;
+}

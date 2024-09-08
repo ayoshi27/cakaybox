@@ -1,5 +1,5 @@
-import { initContract } from '@ts-rest/core';
-import { z } from 'zod';
+import { initContract } from "@ts-rest/core";
+import { z } from "zod";
 
 const ExpendSchema = z.object({
   id: z.number(),
@@ -50,23 +50,28 @@ const ExpendUpdateSchema = z.object({
   processed: z.boolean(),
 });
 
+const getAnnualCalculatedExpendSchema = z.object({
+  categoryName: z.string(),
+  data: z.number().array(),
+});
+
 const c = initContract();
 
 export const expendsContract = c.router({
   getList: {
-    method: 'GET',
-    path: '/expends',
+    method: "GET",
+    path: "/expends",
     responses: {
       200: ExpendSchema.array(),
     },
     query: z.object({
       yearMonth: z.string(),
     }),
-    summary: '支出を取得する',
+    summary: "支出を取得する",
   },
   createExpend: {
-    method: 'POST',
-    path: '/expends',
+    method: "POST",
+    path: "/expends",
     responses: {
       201: ExpendCreateSchema,
     },
@@ -80,10 +85,10 @@ export const expendsContract = c.router({
       paymentMethodId: z.number(),
       processed: z.boolean(),
     }),
-    summary: '支出を新規登録する',
+    summary: "支出を新規登録する",
   },
   updateExpend: {
-    method: 'PATCH',
+    method: "PATCH",
     path: `/expends/:id`,
     responses: { 200: ExpendUpdateSchema },
     body: z.object({
@@ -96,16 +101,27 @@ export const expendsContract = c.router({
       paymentMethodId: z.number().optional(),
       processed: z.boolean().optional(),
     }),
-    summary: '支出を更新する',
+    summary: "支出を更新する",
   },
   deleteExpend: {
-    method: 'DELETE',
+    method: "DELETE",
     path: `/expends/:id`,
     responses: {
       200: z.object({ message: z.string() }),
       404: z.object({ message: z.string() }),
     },
     body: null,
-    summary: '支出を削除する',
+    summary: "支出を削除する",
+  },
+  getAnnualCalculatedExpend: {
+    method: "GET",
+    path: "/expends/annual-calculated",
+    responses: {
+      200: getAnnualCalculatedExpendSchema.array(),
+    },
+    query: z.object({
+      year: z.string(),
+    }),
+    summary: "年間支出の計算結果を取得する",
   },
 });

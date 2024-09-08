@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 export declare const expendsContract: {
     getList: {
         query: z.ZodObject<{
@@ -263,5 +263,29 @@ export declare const expendsContract: {
         method: "DELETE";
         body: null;
         path: "/expends/:id";
+    };
+    getAnnualCalculatedExpend: {
+        query: z.ZodObject<{
+            year: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            year: string;
+        }, {
+            year: string;
+        }>;
+        summary: "年間支出の計算結果を取得する";
+        responses: {
+            200: z.ZodArray<z.ZodObject<{
+                categoryName: z.ZodString;
+                data: z.ZodArray<z.ZodNumber, "many">;
+            }, "strip", z.ZodTypeAny, {
+                data: number[];
+                categoryName: string;
+            }, {
+                data: number[];
+                categoryName: string;
+            }>, "many">;
+        };
+        method: "GET";
+        path: "/expends/annual-calculated";
     };
 };

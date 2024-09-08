@@ -1,10 +1,16 @@
+// NOTE: see Issue: https://github.com/iamkun/dayjs/issues/475#issuecomment-460660048
+import * as dayjs from 'dayjs';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
+import { CategoryService } from '../category/category.service';
 import { Expend, Prisma } from '@prisma/client';
 
 @Injectable()
 export class ExpendService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private categoryService: CategoryService,
+  ) {}
 
   /**
    * 指定したパラメータで支出リストを取得する（findMany）
@@ -88,6 +94,63 @@ export class ExpendService {
   ): Promise<Expend | null> {
     return this.prisma.expend.delete({
       where,
+    });
+  }
+
+  /**
+   * 年間支出を取得する
+   */
+  async getAnnualCalculatedExpend(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.ExpendWhereUniqueInput;
+    where?: Prisma.ExpendWhereInput;
+    orderBy?: Prisma.ExpendOrderByWithRelationInput[];
+  }) {
+    const { skip, take, cursor, where, orderBy } = params;
+    const expends = await this.prisma.expend.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    const categories = await this.categoryService.getList({
+      orderBy: { id: 'asc' },
+    });
+    return categories.map((category) => {
+      const sumForallMonths =
+        expends.reduce((acc: number, expend) => {
+          return expend.categoryId === category.id ? acc + expend.price : acc;
+        }, 0) || 0;
+      const sumForEachMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
+        (month) => {
+          return expends.reduce((acc: number, expend) => {
+            return expend.categoryId === category.id &&
+              dayjs(expend.date).format('M') === String(month)
+              ? acc + expend.price
+              : acc;
+          }, 0);
+        },
+      );
+      const countingMonths = sumForEachMonth.filter(
+        (sumFormonth) => sumFormonth > 0,
+      );
+      const avarageForAllMonths =
+        sumForallMonths === 0 ? 0 : sumForallMonths / countingMonths.length;
+      return {
+        categoryName: category.name,
+        data: [sumForallMonths, avarageForAllMonths, ...sumForEachMonth],
+      };
     });
   }
 }

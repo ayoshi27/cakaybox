@@ -264,6 +264,30 @@ export declare const contract: {
             body: null;
             path: "/expends/:id";
         };
+        getAnnualCalculatedExpend: {
+            query: import("zod").ZodObject<{
+                year: import("zod").ZodString;
+            }, "strip", import("zod").ZodTypeAny, {
+                year: string;
+            }, {
+                year: string;
+            }>;
+            summary: "年間支出の計算結果を取得する";
+            responses: {
+                200: import("zod").ZodArray<import("zod").ZodObject<{
+                    categoryName: import("zod").ZodString;
+                    data: import("zod").ZodArray<import("zod").ZodNumber, "many">;
+                }, "strip", import("zod").ZodTypeAny, {
+                    data: number[];
+                    categoryName: string;
+                }, {
+                    data: number[];
+                    categoryName: string;
+                }>, "many">;
+            };
+            method: "GET";
+            path: "/expends/annual-calculated";
+        };
     };
     budgets: {
         getList: {
