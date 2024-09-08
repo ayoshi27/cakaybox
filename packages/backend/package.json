@@ -30,6 +30,7 @@
     "@ts-rest/core": "^3.33.0",
     "@ts-rest/nest": "^3.33.0",
     "@ts-rest/open-api": "^3.33.0",
+    "dayjs": "^1.11.9",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.0",
