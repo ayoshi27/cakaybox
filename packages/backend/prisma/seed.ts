@@ -23,21 +23,22 @@ async function main() {
   //     name: '食費',
   //   },
   // });
-  // await prisma.category.createMany({
-  //   data: [
-  //     { name: '自動車維持費', code: 'car' },
-  //     { name: '雑貨', code: 'goods' },
-  //     { name: 'お小遣い', code: 'personal' },
-  //     { name: 'その他', code: 'others' },
-  //     { name: '貯金', code: 'savings' },
-  //     { name: '旅行', code: 'travel' },
-  //     { name: 'イベント', code: 'event' },
-  //     { name: '毎月', code: 'monthly' },
-  //     { name: '電気代', code: 'electric' },
-  //     { name: '水道ガス', code: 'utility' },
-  //     { name: 'ちばぎん', code: 'chibagin' },
-  //   ],
-  // });
+  await prisma.category.createMany({
+    data: [
+      // { name: '食費', code: 'food', colorCode: 'eb9665' },
+      // { name: '雑貨', code: 'goods', colorCode: '65a6eb' },
+      // { name: 'お小遣い', code: 'personal', colorCode: 'ebba65' },
+      // { name: 'その他', code: 'others', colorCode: '#b365eb' },
+      // { name: '貯金', code: 'savings', colorCode: 'ebd465' },
+      // { name: '旅行', code: 'travel', colorCode: 'eb65cb' },
+      // { name: 'イベント', code: 'event', colorCode: '7deb65' },
+      // { name: '電気代', code: 'electric', colorCode: 'dbeb65' },
+      // { name: '水道ガス', code: 'utility', colorCode: '65ebe8' },
+      // { name: 'ちばぎん', code: 'chibagin', colorCode: 'eb6e65' },
+      // { name: '毎月', code: 'monthly', colorCode: '65eb9d' },
+      { name: '自動車維持費', code: 'car', colorCode: '6965eb' },
+    ],
+  });
   // await prisma.budget.createMany({
   //   data: [
   //     { name: '共同支出', code: 'shared' },
@@ -106,7 +107,7 @@ async function main() {
   //       categoryId: 6,
   //       budgetId: 1,
   //       paymentMethodId: 1,
-  //       payerId: 1,
+  //       payerId: 1, 
   //     },
   //     {
   //       date: '2023-11-07',
