@@ -1,0 +1,30 @@
+:root {
+  /* primitive tokens */
+  --color-black-normal: #333;
+  --color-gray-light: #f9f9f9;
+  --color-gray-dark: #bababa;
+  --color-white-normal: #ffffff;
+  --color-blue-normal: #1976d2;
+  --color-blue-dark: #334ae0;
+  --color-red-dark: #e03344;
+
+  /* variant tokens */
+  --color-primary: var(--color-blue-normal);
+
+  /* semantic tokens */
+  --color-text-white: var(--color-white-normal);
+  --color-text-sunday: var(--color-red-dark);
+  --color-text-saturday: var(--color-blue-dark);
+  --color-icon-disabled: var(--color-gray-dark);
+
+  --font-size-icon: 24px;
+  --font-size-table-cell: 14px;
+}
+
+/* global styles */
+body {
+  --color-body: var(--color-black-normal);
+
+  font-family: "Noto Sans", Roboto, sans-serif;
+  color: var(--color-body);
+}
