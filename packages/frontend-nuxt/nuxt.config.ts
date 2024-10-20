@@ -3,6 +3,11 @@ export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
+  runtimeConfig: {
+    public: {
+      apiBase: 'http://localhost:3001'
+    }
+  },
   modules: [
     "@nuxt/icon",
     [
@@ -15,6 +20,7 @@ export default defineNuxtConfig({
         },
       },
     ],
+    '@nuxt/test-utils/module'
   ],
   css: ["@/assets/styles/_tokens.css"],
 });

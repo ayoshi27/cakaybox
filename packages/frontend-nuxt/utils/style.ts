@@ -21,7 +21,12 @@ export const tableDateCellCssClass = (date: string) => {
  * @param colorCode {string} - カテゴリーカラーコード
  * @example "000000" -> "#000000"
  */
-export const categoryIconStyle = (colorCode?: string) => {
+export const categoryIconStyle = (colorCode: string | null) => {
+  if (!colorCode) {
+    return {
+      color: "inherit",
+    };
+  }
   return {
     color: `#${colorCode}` || "inherit",
   };
