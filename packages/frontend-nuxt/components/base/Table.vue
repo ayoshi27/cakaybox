@@ -24,7 +24,6 @@ const stickyHeaderClass = props.stickyHeader ? 'sticky-header' : ''
   width: 100%;
   height: calc(100dvh - 40px - (16px * 2) - 40px - (16px * 2) - 16px);
   overflow: auto;
-  margin-top: 8px;
 
   @media screen and (max-width: 400px) {
     height: calc(100dvh - 40px - (15px * 2) - 60px - (56px + 16px));

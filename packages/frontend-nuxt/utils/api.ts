@@ -12,7 +12,7 @@ export const createFetchParams = (params: { [K: string]: string }) => {
 };
 
 /**
- * nuxtのuseAsyncDataにqueryパラメータをオブジェクトで渡せるようにしたwrapper
+ * nuxtのuseFetchにqueryパラメータをオブジェクトで渡せるようにしたwrapper
  * @param url - APIのURL
  * @param params - APIのパラメータ
  */
@@ -20,5 +20,24 @@ export const useAsyncApiFetchData = <T>(url: string, params?: any) => {
   const runtimeConfig = useRuntimeConfig();
   const apiBase = runtimeConfig.public.apiBase;
   const queryString = createFetchParams(params);
-  return useAsyncData<T>(url, () => $fetch(`${apiBase}/${url}${queryString}`));
+  return useFetch<T>(`${apiBase}/${url}${queryString}`, {
+    immediate: false,
+    watch: false,
+  });
+};
+
+/**
+ * nuxtのuseFetch（POST）にqueryパラメータをオブジェクトで渡せるようにしたwrapper
+ * @param url - APIのURL
+ * @param params - APIのパラメータ
+ */
+export const usePostData = (url: string, params?: any) => {
+  const runtimeConfig = useRuntimeConfig();
+  const apiBase = runtimeConfig.public.apiBase;
+  return useFetch(`${apiBase}/${url}`, {
+    method: "POST",
+    body: params,
+    immediate: false,
+    watch: false,
+  });
 };

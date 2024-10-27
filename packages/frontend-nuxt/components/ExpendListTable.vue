@@ -1,28 +1,48 @@
 <script setup lang="ts">
-import { formatDate, formatPrice } from '~/utils/format';
+import { formatDate, formatPrice } from "~/utils/format";
 import { tableDateCellCssClass, categoryIconStyle } from "~/utils/style";
 import { useAsyncApiFetchData } from "~/utils/api";
 import type { Expend } from "~/types/expend.type";
+import ExpendAddDialog from "~/components/ExpendAddDialog.vue";
 
 const props = defineProps({
   yearMonth: {
     type: String,
     required: true,
-  }
+  },
 });
 
-const { data: expends } = await useAsyncApiFetchData<Expend[]>(
-  'expends',
-  { yearMonth: props.yearMonth }
-)
+const expendAddDialogRef = ref<InstanceType<typeof ExpendAddDialog>>();
 
+const {
+  data: expends,
+  execute: fetchExpends,
+  refresh: refreshExpends,
+} = useAsyncApiFetchData<Expend[]>("expends", { yearMonth: props.yearMonth });
+
+/**
+ * ダイアログから支出を追加した際の処理
+ * 支出一覧を更新してダイアログを閉じる
+ */
+const onAddedExpend = async () => {
+  await refreshExpends();
+  expendAddDialogRef.value?.closeAddExpendDialog();
+};
+
+await fetchExpends();
 </script>
 
 <template>
-  <div class="control-panel">
-    <base-button color="primary">支払追加</base-button>
+  <div class="controller-panel">
+    <expend-add-dialog
+      @added-expend="onAddedExpend"
+      ref="expendAddDialogRef"
+    />
   </div>
-  <base-table sticky-header>
+  <base-table
+    class="expend-list-table"
+    sticky-header
+  >
     <thead>
       <tr>
         <th>日付</th>
@@ -38,13 +58,22 @@ const { data: expends } = await useAsyncApiFetchData<Expend[]>(
       </tr>
     </thead>
     <tbody>
-      <tr v-for="expend in expends" :key="expend.id">
-        <td :class="tableDateCellCssClass(expend.date)">{{ formatDate(expend.date) }}</td>
+      <tr
+        v-for="expend in expends"
+        :key="expend.id"
+      >
+        <td :class="tableDateCellCssClass(expend.date)">
+          {{ formatDate(expend.date) }}
+        </td>
         <td class="price-cell">{{ formatPrice(expend.price) }}</td>
         <td>{{ expend.description }}</td>
         <td>
           <div class="category-cell-content">
-            <Icon name="mdi:local-offer" :style="categoryIconStyle(expend.category.colorCode)" class="category-icon" />
+            <Icon
+              name="mdi:local-offer"
+              :style="categoryIconStyle(expend.category.colorCode)"
+              class="category-icon"
+            />
             {{ expend.category.name }}
           </div>
         </td>
@@ -52,7 +81,10 @@ const { data: expends } = await useAsyncApiFetchData<Expend[]>(
         <td>{{ expend.paymentMethod.name }}</td>
         <td>{{ expend.budget.name }}</td>
         <td>
-          <Icon name="mdi:check-circle" :class="['processed-icon', { 'processed': expend.processed }]" />
+          <Icon
+            name="mdi:check-circle"
+            :class="['processed-icon', { processed: expend.processed }]"
+          />
         </td>
         <td><base-button>編集</base-button></td>
         <td><base-button color="grayscale">削除</base-button></td>
@@ -62,12 +94,9 @@ const { data: expends } = await useAsyncApiFetchData<Expend[]>(
 </template>
 
 <style lang="scss" scoped>
-.control-panel {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.expend-list-table {
+  margin-top: 4px;
 }
-
 .is-sunday {
   color: var(--color-text-sunday);
 }

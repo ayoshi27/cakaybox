@@ -31,7 +31,7 @@ const props = defineProps({
   }
   &.color-grayscale {
     --text-color: var(--color-black-normal);
-    --background-color: var(--color-gray-light);
+    --background-color: var(--color-gray-lightest);
   }
 
   display: flex;

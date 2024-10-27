@@ -1,24 +1,34 @@
 <script setup lang="ts">
-import dayjs from 'dayjs'
-const route = useRoute()
+import dayjs from "dayjs";
+
+const route = useRoute();
 const yearMonth = route.params.yearMonth as string;
 
 const navigateToPrevMonth = () => {
-  const prevYearMonth = dayjs(yearMonth).subtract(1, 'month').format('YYYY-MM')
-  navigateTo('/expends/monthly/' + prevYearMonth);
-}
+  const prevYearMonth = dayjs(yearMonth).subtract(1, "month").format("YYYY-MM");
+  navigateTo("/expends/monthly/" + prevYearMonth);
+};
 
 const navigateToNextMonth = () => {
-  const nextYearMonth = dayjs(yearMonth).add(1, 'month').format('YYYY-MM')
-  navigateTo('/expends/monthly/' + nextYearMonth);
-}
+  const nextYearMonth = dayjs(yearMonth).add(1, "month").format("YYYY-MM");
+  navigateTo("/expends/monthly/" + nextYearMonth);
+};
 </script>
 
 <template>
   <main class="expends-monthly-page">
-    <period-controller :yearMonth="yearMonth" @prev="navigateToPrevMonth" @next="navigateToNextMonth" />
+    <div class="page-operation-container">
+      <period-controller
+        :yearMonth="yearMonth"
+        @prev="navigateToPrevMonth"
+        @next="navigateToNextMonth"
+      />
+    </div>
     <base-card>
-      <expend-list-table :yearMonth="yearMonth"></expend-list-table>
+      <expend-list-table
+        :yearMonth="yearMonth"
+        ref="expendListTableRef"
+      />
     </base-card>
   </main>
 </template>
@@ -30,5 +40,11 @@ const navigateToNextMonth = () => {
 
 .base-card {
   margin-top: 16px;
+}
+
+.page-operation-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

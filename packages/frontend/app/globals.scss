@@ -65,7 +65,7 @@ input[type="date"],
 input[type="text"] {
   margin-left: auto;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border-input);
   width: 200px;
   padding: 16px 14px;
   color: #666;
