@@ -41,3 +41,18 @@ export const usePostData = (url: string, params?: any) => {
     watch: false,
   });
 };
+
+/**
+ * nuxtの$fetch（DELETE）にパラメータをオブジェクトで渡せるようにしたwrapper
+ * @param url - APIのURL
+ * @param id - 削除するレコードのID
+ */
+export const deleteData = (url: string, id: number) => {
+  const runtimeConfig = useRuntimeConfig();
+  const apiBase = runtimeConfig.public.apiBase;
+  return $fetch(`${apiBase}/${url}/${id}`, {
+    method: "DELETE",
+    immediate: false,
+    watch: false,
+  });
+};

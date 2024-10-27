@@ -29,6 +29,15 @@ const onAddedExpend = async () => {
   expendAddDialogRef.value?.closeAddExpendDialog();
 };
 
+/**
+ * 指定されたIDの支出レコードを削除し、一覧を更新する
+ * @param expendId - 削除する支出のID
+ */
+const deleteExpend = async (expendId: number) => {
+  await deleteData("expends", expendId);
+  refreshExpends();
+};
+
 await fetchExpends();
 </script>
 
@@ -87,7 +96,13 @@ await fetchExpends();
           />
         </td>
         <td><base-button>編集</base-button></td>
-        <td><base-button color="grayscale">削除</base-button></td>
+        <td>
+          <base-button
+            color="grayscale"
+            @click="() => deleteExpend(expend.id)"
+            >削除</base-button
+          >
+        </td>
       </tr>
     </tbody>
   </base-table>
