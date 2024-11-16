@@ -43,12 +43,12 @@ await fetchExpends();
 
 <template>
   <div class="controller-panel">
-    <expend-add-dialog
+    <ExpendAddDialog
       @added-expend="onAddedExpend"
       ref="expendAddDialogRef"
     />
   </div>
-  <base-table
+  <BaseTable
     class="expend-list-table"
     sticky-header
   >
@@ -97,15 +97,15 @@ await fetchExpends();
         </td>
         <td><base-button>編集</base-button></td>
         <td>
-          <base-button
+          <BaseButton
             color="grayscale"
             @click="() => deleteExpend(expend.id)"
-            >削除</base-button
+            >削除</BaseButton
           >
         </td>
       </tr>
     </tbody>
-  </base-table>
+  </BaseTable>
 </template>
 
 <style lang="scss" scoped>

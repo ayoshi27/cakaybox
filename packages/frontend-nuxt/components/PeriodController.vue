@@ -14,16 +14,16 @@ const formatedYearMonth = dayjs(props.yearMonth).format('YYYY年MM月');
 
 <template>
   <div class="period-controller">
-    <base-button @click="$emit('prev')">
+    <BaseButton @click="$emit('prev')">
       <Icon name="mdi:chevron-left" class="chevron-icon" />前月
-    </base-button>
+    </BaseButton>
     <h1 class="current-year-month">
       {{ formatedYearMonth }}の支出一覧
     </h1>
-    <base-button @click="$emit('next')">
+    <BaseButton @click="$emit('next')">
       翌月
       <Icon name="mdi:chevron-right" class="chevron-icon" />
-    </base-button>
+    </BaseButton>
   </div>
 </template>
 

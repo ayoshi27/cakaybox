@@ -84,12 +84,12 @@ formValueBudget.value = budgets.value?.[0].id;
 </script>
 
 <template>
-  <base-dialog
+  <BaseDialog
     @close="resetFormValue"
     ref="dialogRef"
   >
     <template #trigger="{ showDialog }">
-      <base-button
+      <BaseButton
         color="primary"
         @click="showDialog"
       >
@@ -97,63 +97,63 @@ formValueBudget.value = budgets.value?.[0].id;
           name="mdi:plus-thick"
           class="plus-icon"
         />
-        支出追加</base-button
+        支出追加</BaseButton
       >
     </template>
     <template #contents>
       <div class="dialog-header">
         <h1 class="dialog-title">支出を追加</h1>
-        <base-button>
+        <BaseButton>
           <icon
             name="mdi:heart-outline"
             class="heart-icon"
           />
           お気に入り
-        </base-button>
+        </BaseButton>
       </div>
       <form class="expend-add-form">
-        <base-date-picker
+        <BaseDatePicker
           label="日付"
           v-model="formValueDate"
         />
-        <base-input-text
+        <BaseInputText
           label="料金"
           v-model="formValuePrice"
           auto-focus
         />
-        <base-input-text
+        <BaseInputText
           label="内容"
           v-model="formValueDescription"
         />
-        <base-select
+        <BaseSelect
           label="カテゴリー"
           :items="categories"
           v-model="formValueCategory"
-        ></base-select>
-        <base-select
+        ></BaseSelect>
+        <BaseSelect
           label="支払方法"
           :items="paymentMethods"
           v-model="formValuePaymentMethod"
-        ></base-select>
-        <base-select
+        ></BaseSelect>
+        <BaseSelect
           label="支払元"
           :items="budgets"
           v-model="formValueBudget"
-        ></base-select>
-        <base-check-box
+        ></BaseSelect>
+        <BaseCheckBox
           label="精算済"
           v-model="formValueIsProcessed"
-        ></base-check-box>
+        ></BaseCheckBox>
       </form>
       <div class="dialog-footer">
-        <base-button
+        <BaseButton
           color="primary"
           @click="addExpend"
-          >追加</base-button
+          >追加</BaseButton
         >
       </div>
     </template>
-  </base-dialog>
+  </BaseDialog>
 </template>
 
 <style lang="scss" scoped>
