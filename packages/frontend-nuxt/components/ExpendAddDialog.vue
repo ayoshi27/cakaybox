@@ -21,7 +21,7 @@ const formValueIsProcessed = ref(false);
 const postExpendRequestBody = computed(() => {
   return {
     date: formValueDate.value,
-    price: Number(formValuePrice.value),
+    price: formValuePrice.value,
     description: formValueDescription.value,
     categoryId: formValueCategory.value,
     paymentMethodId: formValuePaymentMethod.value,
@@ -118,7 +118,7 @@ formValueBudget.value = budgets.value?.[0].id;
         />
         <BaseInputText
           label="料金"
-          v-model="formValuePrice"
+          v-model.number="formValuePrice"
           auto-focus
         />
         <BaseInputText
