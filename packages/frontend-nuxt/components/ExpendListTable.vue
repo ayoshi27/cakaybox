@@ -16,7 +16,11 @@ const props = defineProps({
   },
 });
 
-const expendAddDialogRef = ref<InstanceType<typeof ExpendAddDialog>>();
+const expendAddDialogRef =
+  useTemplateRef<InstanceType<typeof ExpendAddDialog>>("expendAddDialogRef");
+const expendUpdateDialogRef = useTemplateRef<
+  InstanceType<typeof ExpendUpdateDialog>[]
+>("expendUpdateDialogRef");
 
 const {
   data: expends,
@@ -45,7 +49,7 @@ export type SelectOptions = {
   categories: Category[] | null;
   paymentMethods: PaymentMethod[] | null;
   budgets: Budget[] | null;
-}
+};
 const selectOptions = computed<SelectOptions>(() => {
   return {
     categories: categories.value,
@@ -61,6 +65,15 @@ const selectOptions = computed<SelectOptions>(() => {
 const onAddedExpend = async () => {
   await refreshExpends();
   expendAddDialogRef.value?.closeAddExpendDialog();
+};
+
+/**
+ * ダイアログから支出を編集した際の処理
+ * 支出一覧を更新してダイアログを閉じる
+ */
+const onUpdatedExpend = async (index: number) => {
+  await refreshExpends();
+  expendUpdateDialogRef.value?.[0].closeUpdateExpendDialog();
 };
 
 /**
@@ -105,7 +118,7 @@ await fetchInitialSelectOptions();
     </thead>
     <tbody>
       <tr
-        v-for="expend in expends"
+        v-for="(expend, index) in expends"
         :key="expend.id"
       >
         <td :class="tableDateCellCssClass(expend.date)">
@@ -135,7 +148,9 @@ await fetchInitialSelectOptions();
         <td>
           <ExpendUpdateDialog
             :expend="expend"
+            @updated-expend="onUpdatedExpend(index)"
             :select-options="selectOptions"
+            ref="expendUpdateDialogRef"
           />
         </td>
         <td>

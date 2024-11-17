@@ -43,6 +43,22 @@ export const usePostData = (url: string, params?: any) => {
 };
 
 /**
+ * nuxtのuseFetch（PATCH）にqueryパラメータをオブジェクトで渡せるようにしたwrapper
+ * @param url - APIのURL
+ * @param params - APIのパラメータ
+ */
+export const usePatchData = (url: string, id: number, params?: any) => {
+  const runtimeConfig = useRuntimeConfig();
+  const apiBase = runtimeConfig.public.apiBase;
+  return useFetch(`${apiBase}/${url}/${id}`, {
+    method: "PATCH",
+    body: params,
+    immediate: false,
+    watch: false,
+  });
+};
+
+/**
  * nuxtの$fetch（DELETE）にパラメータをオブジェクトで渡せるようにしたwrapper
  * @param url - APIのURL
  * @param id - 削除するレコードのID
