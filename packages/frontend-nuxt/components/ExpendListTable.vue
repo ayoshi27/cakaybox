@@ -81,6 +81,9 @@ const onUpdatedExpend = async (index: number) => {
  * @param expendId - 削除する支出のID
  */
 const deleteExpend = async (expendId: number) => {
+  const tagertExpendDescription = expends.value?.find((expend) => expend.id === expendId)
+    ?.description;
+  if (!confirm(`・${tagertExpendDescription}\n\nこの支出を削除します。よろしいですか？`)) return;
   await deleteData("expends", expendId);
   refreshExpends();
 };
