@@ -1,29 +1,19 @@
 <script setup lang="ts">
-const props = defineProps({
-  label: {
-    type: String,
-    required: false,
-  },
-  modelValue: {
-    type: Boolean,
-    required: true,
-  },
-});
-const emit = defineEmits(["update:modelValue"]);
-const updateModelValue = (event: Event) => {
-  emit("update:modelValue", (event.target as HTMLInputElement).value);
+type Props = {
+  label?: string;
 };
+const { label } = defineProps<Props>();
+const model = defineModel();
 </script>
 
 <template>
   <div class="base-checkbox">
-    <span v-if="props.label">{{ `${props.label}：` }}</span>
+    <span v-if="label">{{ `${label}：` }}</span>
     <label class="checkbox-label">
       <input
         class="input-elemment"
         type="checkbox"
-        :checked="props.modelValue"
-        @change="updateModelValue"
+        v-model="model"
       />
     </label>
   </div>

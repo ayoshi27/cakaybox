@@ -1,37 +1,23 @@
 <script setup lang="ts">
 type SelectItem = { id: number; name: string };
-const props = defineProps({
-  label: {
-    type: String,
-    required: false,
-  },
-  items: {
-    type: Array as () => SelectItem[] | null,
-    required: true,
-  },
-  modelValue: {
-    type: Number,
-    required: false,
-  },
-});
-const emit = defineEmits(["update:modelValue"]);
-const updateModelValue = (event: Event) => {
-  const value = Number((event.target as HTMLInputElement).value);
-  emit("update:modelValue", value);
+type Props = {
+  label?: string;
+  items: SelectItem[] | null;
 };
+const { label, items } = defineProps<Props>();
+const model = defineModel();
 </script>
 
 <template>
   <div class="base-select">
-    <span v-if="props.label">{{ `${props.label}：` }}</span>
+    <span v-if="label">{{ `${label}：` }}</span>
     <select
       class="select-elemment"
-      @change="updateModelValue"
+      v-model="model"
     >
       <option
         v-for="item in items"
         :value="item.id"
-        :selected="item.id === modelValue"
       >
         {{ item.name }}
       </option>

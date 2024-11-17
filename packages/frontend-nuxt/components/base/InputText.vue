@@ -1,34 +1,20 @@
 <script setup lang="ts">
-const props = defineProps({
-  label: {
-    type: String,
-    required: false,
-  },
-  modelValue: {
-    type: String,
-    required: true,
-  },
-  autoFocus: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-});
-const emit = defineEmits(["update:modelValue"]);
-const updateModelValue = (event: Event) => {
-  emit("update:modelValue", (event.target as HTMLInputElement).value);
+type Props = {
+  label?: string;
+  autoFocus?: boolean;
 };
+const { label, autoFocus = false } = defineProps<Props>();
+const model = defineModel();
 </script>
 
 <template>
   <div class="base-input-text">
-    <span v-if="props.label">{{ `${props.label}：` }}</span>
+    <span v-if="label">{{ `${label}：` }}</span>
     <input
       class="input-elemment"
       type="text"
-      :value="props.modelValue"
-      @input="updateModelValue"
-      :autofocus="props.autoFocus"
+      v-model="model"
+      :autofocus="autoFocus"
     />
   </div>
 </template>
