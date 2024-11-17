@@ -106,7 +106,7 @@ await fetchInitialSelectOptions();
       <tr>
         <th>日付</th>
         <th>料金</th>
-        <th>内容</th>
+        <th class="description-cell">内容</th>
         <th>カテゴリー</th>
         <th>支払者</th>
         <th>支払方法</th>
@@ -179,6 +179,9 @@ await fetchInitialSelectOptions();
 
 .price-cell {
   text-align: right;
+}
+.description-cell {
+  min-width: 250px;
 }
 
 .category-icon {
