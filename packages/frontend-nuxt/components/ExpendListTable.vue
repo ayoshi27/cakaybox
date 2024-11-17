@@ -3,7 +3,11 @@ import { formatDate, formatPrice } from "~/utils/format";
 import { tableDateCellCssClass, categoryIconStyle } from "~/utils/style";
 import { useAsyncApiFetchData } from "~/utils/api";
 import type { Expend } from "~/types/expend.type";
+import type { Category } from "~/types/category.type";
+import type { PaymentMethod } from "~/types/payment-method.type";
+import type { Budget } from "~/types/budget.type";
 import ExpendAddDialog from "~/components/ExpendAddDialog.vue";
+import ExpendUpdateDialog from "./ExpendUpdateDialog.vue";
 
 const props = defineProps({
   yearMonth: {
@@ -19,6 +23,36 @@ const {
   execute: fetchExpends,
   refresh: refreshExpends,
 } = useAsyncApiFetchData<Expend[]>("expends", { yearMonth: props.yearMonth });
+
+// 支出追加/更新時の選択肢をAPIから取得する
+const { data: categories, execute: fetchCategories } =
+  useAsyncApiFetchData<Category[]>("categories");
+const { data: paymentMethods, execute: fetchPaymentMethods } =
+  useAsyncApiFetchData<PaymentMethod[]>("payment-methods");
+const { data: budgets, execute: fetchBudgets } =
+  useAsyncApiFetchData<Budget[]>("budgets");
+
+const fetchInitialSelectOptions = async () => {
+  Promise.all([
+    await fetchCategories(),
+    await fetchPaymentMethods(),
+    await fetchBudgets(),
+  ]);
+};
+
+/** 支出追加/更新時の選択肢 */
+export type SelectOptions = {
+  categories: Category[] | null;
+  paymentMethods: PaymentMethod[] | null;
+  budgets: Budget[] | null;
+}
+const selectOptions = computed<SelectOptions>(() => {
+  return {
+    categories: categories.value,
+    paymentMethods: paymentMethods.value,
+    budgets: budgets.value,
+  };
+});
 
 /**
  * ダイアログから支出を追加した際の処理
@@ -39,14 +73,17 @@ const deleteExpend = async (expendId: number) => {
 };
 
 await fetchExpends();
+await fetchInitialSelectOptions();
 </script>
 
 <template>
   <div class="controller-panel">
     <ExpendAddDialog
+      :select-options="selectOptions"
       @added-expend="onAddedExpend"
       ref="expendAddDialogRef"
-    />
+    >
+    </ExpendAddDialog>
   </div>
   <BaseTable
     class="expend-list-table"
@@ -95,7 +132,12 @@ await fetchExpends();
             :class="['processed-icon', { processed: expend.processed }]"
           />
         </td>
-        <td><base-button>編集</base-button></td>
+        <td>
+          <ExpendUpdateDialog
+            :expend="expend"
+            :select-options="selectOptions"
+          />
+        </td>
         <td>
           <BaseButton
             color="grayscale"

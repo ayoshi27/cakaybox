@@ -1,33 +1,40 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
 import BaseDialog from "./base/Dialog.vue";
-import type { Category } from "~/types/category.type";
-import type { PaymentMethod } from "~/types/payment-method.type";
-import type { Budget } from "~/types/budget.type";
+import type { SelectOptions } from "./ExpendListTable.vue";
 import { getPayerIdByPaymentMethodId } from "~/utils/finder";
 
 const dialogRef = ref<InstanceType<typeof BaseDialog>>();
 const emit = defineEmits(["added-expend"]);
 
+type Props = {
+  selectOptions: SelectOptions;
+};
+const { selectOptions } = defineProps<Props>();
+
 // フォーム入力値
-const formValuePrice = ref("");
+const formValuePrice = ref<number>();
 const formValueDescription = ref("");
-const formValueCategory = ref<number | undefined>(0);
-const formValuePaymentMethod = ref<number | undefined>(0);
-const formValueBudget = ref<number | undefined>(0);
+const formValueCategory = ref<number | undefined>(
+  selectOptions.categories?.[0].id,
+);
+const formValuePaymentMethod = ref<number | undefined>(
+  selectOptions.paymentMethods?.[0].id,
+);
+const formValueBudget = ref<number | undefined>(selectOptions.budgets?.[0].id);
 const formValueDate = ref(dayjs().format("YYYY-MM-DD"));
 const formValueIsProcessed = ref(false);
 
 const postExpendRequestBody = computed(() => {
   return {
     date: formValueDate.value,
-    price: formValuePrice.value,
+    price: formValuePrice.value || 0,
     description: formValueDescription.value,
     categoryId: formValueCategory.value,
     paymentMethodId: formValuePaymentMethod.value,
     payerId: getPayerIdByPaymentMethodId(
       formValuePaymentMethod.value,
-      paymentMethods.value,
+      selectOptions.paymentMethods,
     ),
     budgetId: formValueBudget.value,
     processed: formValueIsProcessed.value,
@@ -36,11 +43,11 @@ const postExpendRequestBody = computed(() => {
 
 const resetFormValue = () => {
   formValueDate.value = dayjs().format("YYYY-MM-DD");
-  formValuePrice.value = "";
+  formValuePrice.value = 0;
   formValueDescription.value = "";
-  formValueCategory.value = categories.value?.[0].id;
-  formValuePaymentMethod.value = paymentMethods.value?.[0].id;
-  formValueBudget.value = budgets.value?.[0].id;
+  formValueCategory.value = selectOptions.categories?.[0].id;
+  formValuePaymentMethod.value = selectOptions.paymentMethods?.[0].id;
+  formValueBudget.value = selectOptions.budgets?.[0].id;
   formValueIsProcessed.value = false;
 };
 
@@ -53,34 +60,12 @@ const closeAddExpendDialog = () => {
   dialogRef.value?.closeDialog();
 };
 
-// APIから取得したデータ
-const { data: categories, execute: fetchCategories } =
-  useAsyncApiFetchData<Category[]>("categories");
-const { data: paymentMethods, execute: fetchPaymentMethods } =
-  useAsyncApiFetchData<PaymentMethod[]>("payment-methods");
-const { data: budgets, execute: fetchBudgets } =
-  useAsyncApiFetchData<Budget[]>("budgets");
-
 const { execute: executePostExpend } = usePostData(
   "expends",
   postExpendRequestBody,
 );
-const fetchInitialData = async () => {
-  Promise.all([
-    await fetchCategories(),
-    await fetchPaymentMethods(),
-    await fetchBudgets(),
-  ]);
-};
 
 defineExpose({ closeAddExpendDialog });
-
-await fetchInitialData();
-
-// フォーム入力値に、APIから取得した選択肢を設定する
-formValueCategory.value = categories.value?.[0].id;
-formValuePaymentMethod.value = paymentMethods.value?.[0].id;
-formValueBudget.value = budgets.value?.[0].id;
 </script>
 
 <template>
@@ -127,17 +112,17 @@ formValueBudget.value = budgets.value?.[0].id;
         />
         <BaseSelect
           label="カテゴリー"
-          :items="categories"
+          :items="selectOptions.categories"
           v-model="formValueCategory"
         ></BaseSelect>
         <BaseSelect
           label="支払方法"
-          :items="paymentMethods"
+          :items="selectOptions.paymentMethods"
           v-model="formValuePaymentMethod"
         ></BaseSelect>
         <BaseSelect
           label="支払元"
-          :items="budgets"
+          :items="selectOptions.budgets"
           v-model="formValueBudget"
         ></BaseSelect>
         <BaseCheckBox
