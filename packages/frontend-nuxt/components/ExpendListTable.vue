@@ -73,7 +73,7 @@ const onAddedExpend = async () => {
  */
 const onUpdatedExpend = async (index: number) => {
   await refreshExpends();
-  expendUpdateDialogRef.value?.[0].closeUpdateExpendDialog();
+  expendUpdateDialogRef.value?.[index].closeUpdateExpendDialog();
 };
 
 /**
