@@ -122,6 +122,7 @@ const emit = defineEmits(["added-expend", "apply-filter"]);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
 }
 
 .dialog-title {
