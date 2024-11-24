@@ -1,4 +1,4 @@
-import type { FilterConditionForExpendList } from "../ExpendListTable/ExpendListTable.type";
+import type { FilterConditionForExpendList } from "./ExpendListTable.types";
 
 /** フィルター条件の初期値 */
 export const initialFilterValues: FilterConditionForExpendList = {

@@ -9,8 +9,8 @@ import type { Budget } from "~/types/budget.type";
 import ExpendAddDialog from "~/components/ExpendAddDialog.vue";
 import ExpendUpdateDialog from "../ExpendUpdateDialog.vue";
 import ExpendFilterDialog from "../ExpendFilterDialog.vue";
-import { filterExpends } from "../ExpendListTable/ExpendListTable.module";
-import type { FilterConditionForExpendList } from "../ExpendListTable/ExpendListTable.type";
+import { filterExpends } from "./ExpendListTable.modules";
+import type { FilterConditionForExpendList } from "./ExpendListTable.types";
 import { initialFilterValues } from "../ExpendListTable/ExpendListTable.const";
 
 const props = defineProps({
