@@ -13,7 +13,7 @@ type Props = {
 const { selectOptions } = defineProps<Props>();
 
 // フォーム入力値
-const formValuePrice = ref<number>();
+const formValuePrice = ref<number | undefined>(undefined);
 const formValueDescription = ref("");
 const formValueCategory = ref<number | undefined>(
   selectOptions.categories?.[0].id,
@@ -43,7 +43,7 @@ const postExpendRequestBody = computed(() => {
 
 const resetFormValue = () => {
   formValueDate.value = dayjs().format("YYYY-MM-DD");
-  formValuePrice.value = 0;
+  formValuePrice.value = undefined;
   formValueDescription.value = "";
   formValueCategory.value = selectOptions.categories?.[0].id;
   formValuePaymentMethod.value = selectOptions.paymentMethods?.[0].id;
