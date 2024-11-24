@@ -165,6 +165,7 @@ await fetchInitialSelectOptions();
       </BaseButton>
       <ExpendFilterDialog
         :select-options="selectOptions"
+        :is-filtered="isFiltered"
         @apply-filter="applyFilterConditions"
       ></ExpendFilterDialog>
     </div>

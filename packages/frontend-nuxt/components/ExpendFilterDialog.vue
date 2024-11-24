@@ -1,26 +1,28 @@
 <script setup lang="ts">
-import BaseDialog from "./base/Dialog.vue";
 import type { SelectOptions } from "./ExpendListTable/ExpendListTable.vue";
+import { initialFilterValues } from "./ExpendListTable/ExpendListTable.const";
+import BaseDialog from "./base/Dialog.vue";
 
 type Props = {
   selectOptions: SelectOptions;
+  isFiltered: boolean
 };
-const { selectOptions } = defineProps<Props>();
+const { selectOptions, isFiltered } = defineProps<Props>();
 
 const dialogRef = ref<InstanceType<typeof BaseDialog>>();
 
 const searchWord = ref("");
-const category = ref([]);
-const paymentMethod = ref([]);
-const budget = ref([]);
-const processed = ref([]);
+const category = ref<number[]>([]);
+const paymentMethod = ref<number[]>([]);
+const budget = ref<number[]>([]);
+const processed = ref<Boolean[]>([]);
 
 const resetFormValue = () => {
-  searchWord.value = "";
-  category.value = [];
-  paymentMethod.value = [];
-  budget.value = [];
-  processed.value = [];
+  searchWord.value = initialFilterValues.searchWord;
+  category.value = initialFilterValues.categoryIdList;
+  paymentMethod.value = initialFilterValues.paymentMethodIdList;
+  budget.value = initialFilterValues.budgetIdList;
+  processed.value = initialFilterValues.isProcessedList;
 };
 
 const applyFilter = () => {
@@ -29,10 +31,14 @@ const applyFilter = () => {
     categoryIdList: category.value,
     paymentMethodIdList: paymentMethod.value,
     budgetIdList: budget.value,
-    isProcessedList: processed.value.map(item => Boolean(item)),
+    isProcessedList: processed.value.map((item) => Boolean(item)),
   });
   dialogRef.value?.closeDialog();
 };
+
+const filterButtonIcon = computed(() => {
+  return isFiltered ? "mdi:filter" : "mdi:filter-outline";
+})
 
 const emit = defineEmits(["added-expend", "apply-filter"]);
 </script>
@@ -45,7 +51,7 @@ const emit = defineEmits(["added-expend", "apply-filter"]);
     <template #trigger="{ showDialog }">
       <BaseButton @click="showDialog">
         <icon
-          name="mdi:filter-outline"
+          :name="filterButtonIcon"
           class="filter-icon"
         />
         フィルター</BaseButton
