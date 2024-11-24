@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 import BaseDialog from "./base/Dialog.vue";
 import type { Expend } from "~/types/expend.type";
-import type { SelectOptions } from "./ExpendListTable.vue";
+import type { SelectOptions } from "./ExpendListTable/ExpendListTable.vue";
 import { getPayerIdByPaymentMethodId } from "~/utils/finder";
 
 const dialogRef = ref<InstanceType<typeof BaseDialog>>();

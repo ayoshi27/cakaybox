@@ -7,7 +7,11 @@ import type { Category } from "~/types/category.type";
 import type { PaymentMethod } from "~/types/payment-method.type";
 import type { Budget } from "~/types/budget.type";
 import ExpendAddDialog from "~/components/ExpendAddDialog.vue";
-import ExpendUpdateDialog from "./ExpendUpdateDialog.vue";
+import ExpendUpdateDialog from "../ExpendUpdateDialog.vue";
+import ExpendFilterDialog from "../ExpendFilterDialog.vue";
+import { filterExpends } from "../ExpendListTable/ExpendListTable.module";
+import type { FilterConditionForExpendList } from "../ExpendListTable/ExpendListTable.type";
+import { initialFilterValues } from "../ExpendListTable/ExpendListTable.const";
 
 const props = defineProps({
   yearMonth: {
@@ -27,6 +31,48 @@ const {
   execute: fetchExpends,
   refresh: refreshExpends,
 } = useAsyncApiFetchData<Expend[]>("expends", { yearMonth: props.yearMonth });
+
+/**
+ * フィルター条件を適用した支出一覧
+ */
+const filteredExpends = computed(() => {
+  return filterExpends(expends, filterCondition);
+});
+
+const filterCondition = ref<FilterConditionForExpendList>(initialFilterValues);
+
+/**
+ * フィルター条件をリセットする
+ */
+const resetFilterConditions = () => {
+  applyFilterConditions(initialFilterValues);
+};
+
+/**
+ * フィルター条件を適用する
+ * @param {Object} newValue -
+ * searchWord: string
+ * categoryIdList: number[]
+ * budgetIdList: number[]
+ * paymentMethodIdList: number[]
+ * isProcessedList: boolean[]
+ */
+const applyFilterConditions = (newValue: typeof filterCondition.value) => {
+  filterCondition.value = newValue;
+};
+
+/**
+ * フィルター条件が適用されているか
+ */
+const isFiltered = computed(() => {
+  return (
+    filterCondition.value.searchWord !== "" ||
+    filterCondition.value.categoryIdList.length > 0 ||
+    filterCondition.value.budgetIdList.length > 0 ||
+    filterCondition.value.paymentMethodIdList.length > 0 ||
+    filterCondition.value.isProcessedList.length > 0
+  );
+});
 
 // 支出追加/更新時の選択肢をAPIから取得する
 const { data: categories, execute: fetchCategories } =
@@ -81,9 +127,15 @@ const onUpdatedExpend = async (index: number) => {
  * @param expendId - 削除する支出のID
  */
 const deleteExpend = async (expendId: number) => {
-  const tagertExpendDescription = expends.value?.find((expend) => expend.id === expendId)
-    ?.description;
-  if (!confirm(`・${tagertExpendDescription}\n\nこの支出を削除します。よろしいですか？`)) return;
+  const tagertExpendDescription = expends.value?.find(
+    (expend) => expend.id === expendId,
+  )?.description;
+  if (
+    !confirm(
+      `・${tagertExpendDescription}\n\nこの支出を削除します。よろしいですか？`,
+    )
+  )
+    return;
   await deleteData("expends", expendId);
   refreshExpends();
 };
@@ -100,6 +152,22 @@ await fetchInitialSelectOptions();
       ref="expendAddDialogRef"
     >
     </ExpendAddDialog>
+    <div class="filter-container">
+      <div class="price-sum">
+        <span class="price-sum-label">表示中支出の料金合計： </span>
+        {{ formatPrice(getSumPrice(filteredExpends)) }}
+      </div>
+      <BaseButton @click="resetFilterConditions">
+        <icon
+          name="mdi:filter-off-outline"
+          class="filter-off-icon"
+        />
+      </BaseButton>
+      <ExpendFilterDialog
+        :select-options="selectOptions"
+        @apply-filter="applyFilterConditions"
+      ></ExpendFilterDialog>
+    </div>
   </div>
   <BaseTable
     class="expend-list-table"
@@ -121,7 +189,7 @@ await fetchInitialSelectOptions();
     </thead>
     <tbody>
       <tr
-        v-for="(expend, index) in expends"
+        v-for="(expend, index) in filteredExpends"
         :key="expend.id"
       >
         <td :class="tableDateCellCssClass(expend.date)">
@@ -169,8 +237,28 @@ await fetchInitialSelectOptions();
 </template>
 
 <style lang="scss" scoped>
+.controller-panel {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.price-sum {
+  display: flex;
+  align-items: center;
+}
+.price-sum-label {
+  font-size: 13px;
+}
+.filter-off-icon {
+  font-size: 20px;
+}
 .expend-list-table {
   margin-top: 4px;
+  height: calc(100dvh - 40px - (16px * 2) - 40px - (16px * 2) - 16px - 4px);
 }
 .is-sunday {
   color: var(--color-text-sunday);

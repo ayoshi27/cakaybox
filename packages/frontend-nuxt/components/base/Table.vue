@@ -22,7 +22,6 @@ const stickyHeaderClass = props.stickyHeader ? 'sticky-header' : ''
 <style lang="scss" scoped>
 .table-container {
   width: 100%;
-  height: calc(100dvh - 40px - (16px * 2) - 40px - (16px * 2) - 16px);
   overflow: auto;
 
   @media screen and (max-width: 400px) {

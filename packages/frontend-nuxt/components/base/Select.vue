@@ -3,8 +3,9 @@ type SelectItem = { id: number; name: string };
 type Props = {
   label?: string;
   items: SelectItem[] | null;
+  multiple?: boolean;
 };
-const { label, items } = defineProps<Props>();
+const { label, items, multiple = false } = defineProps<Props>();
 const model = defineModel();
 </script>
 
@@ -14,6 +15,7 @@ const model = defineModel();
     <select
       class="select-elemment"
       v-model="model"
+      :multiple="multiple"
     >
       <option
         v-for="item in items"
