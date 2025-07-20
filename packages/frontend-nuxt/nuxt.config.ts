@@ -1,3 +1,5 @@
+import { resolve } from 'path'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
@@ -6,6 +8,17 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: 'http://localhost:3001'
+    }
+  },
+  vite: {
+    server: {
+      fs: {
+        allow: [
+          resolve(__dirname),           // プロジェクトディレクトリ
+          resolve(__dirname, '..'),     // ワークスペースルート
+          resolve(__dirname, '../..'),     
+        ]
+      }
     }
   },
   modules: [

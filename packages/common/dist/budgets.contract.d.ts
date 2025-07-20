@@ -2,6 +2,8 @@ import { z } from 'zod';
 export declare const budgetsContract: {
     getList: {
         summary: "支出元リストを取得する";
+        method: "GET";
+        path: "/budgets";
         responses: {
             200: z.ZodArray<z.ZodObject<{
                 id: z.ZodNumber;
@@ -14,7 +16,5 @@ export declare const budgetsContract: {
                 name: string;
             }>, "many">;
         };
-        method: "GET";
-        path: "/budgets";
     };
 };

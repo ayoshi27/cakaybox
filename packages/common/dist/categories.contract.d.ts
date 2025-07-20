@@ -2,6 +2,8 @@ import { z } from 'zod';
 export declare const categoriesContract: {
     getList: {
         summary: "カテゴリーリストを取得する";
+        method: "GET";
+        path: "/categories";
         responses: {
             200: z.ZodArray<z.ZodObject<{
                 id: z.ZodNumber;
@@ -20,7 +22,5 @@ export declare const categoriesContract: {
                 colorCode: string | null;
             }>, "many">;
         };
-        method: "GET";
-        path: "/categories";
     };
 };

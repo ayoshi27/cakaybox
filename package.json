@@ -2,27 +2,24 @@
   "name": "@cakaybox/root",
   "description": "家計簿管理アプリ「cakaybox」",
   "private": true,
-  "workspaces": [
-    "packages/common",
-    "packages/backend",
-    "packages/frontend",
-    "packages/frontend-nuxt"
-  ],
   "scripts": {
-    "prepare": "npm run compile",
+    "prepare": "pnpm run compile",
     "compile": "tsc -b tsconfig.build.json",
-    "start:dev:api": "npm run start:dev -w @cakaybox/backend",
-    "dev:app": "npm run dev -w @cakaybox/frontend",
-    "build:api": "npm run build -w @cakaybox/backend",
-    "build:app": "npm run build -w @cakaybox/frontend",
-    "start:prod:api": "npm run start:prod -w @cakaybox/backend",
-    "start:app": "npm run start -w @cakaybox/frontend",
-    "dev:nuxt": "npm run dev -w @cakaybox/frontend-nuxt",
+    "dev:api": "pnpm --filter @cakaybox/backend run start:dev",
+    "dev:app": "pnpm --filter @cakaybox/frontend run dev",
+    "build:api": "pnpm --filter @cakaybox/backend run build",
+    "build:app": "pnpm --filter @cakaybox/frontend run build",
+    "start:prod:api": "pnpm --filter @cakaybox/backend run start:prod",
+    "start:app": "pnpm --filter @cakaybox/frontend run start",
+    "dev:nuxt": "pnpm --filter @cakaybox/frontend-nuxt run dev",
     "sample": "node sample.js"
   },
   "dependencies": {
     "@ts-rest/core": "^3.33.0",
     "nuxt": "^3.13.2",
     "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "typescript": "latest"
   }
 }

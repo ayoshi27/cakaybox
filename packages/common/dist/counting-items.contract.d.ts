@@ -2,6 +2,8 @@ import { z } from 'zod';
 export declare const countingItemsContract: {
     getList: {
         summary: "集計項目リストを取得する";
+        method: "GET";
+        path: "/counting-items";
         responses: {
             200: z.ZodArray<z.ZodObject<{
                 id: z.ZodNumber;
@@ -101,7 +103,5 @@ export declare const countingItemsContract: {
                 processed: boolean[];
             }>, "many">;
         };
-        method: "GET";
-        path: "/counting-items";
     };
 };

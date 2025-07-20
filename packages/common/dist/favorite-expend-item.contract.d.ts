@@ -2,6 +2,8 @@ import { z } from 'zod';
 export declare const favoriteExpendItemContract: {
     getList: {
         summary: "お気に入りリストを取得する";
+        method: "GET";
+        path: "/favorite-expend-items";
         responses: {
             200: z.ZodArray<z.ZodObject<{
                 id: z.ZodNumber;
@@ -101,7 +103,5 @@ export declare const favoriteExpendItemContract: {
                 price: number;
             }>, "many">;
         };
-        method: "GET";
-        path: "/favorite-expend-items";
     };
 };
