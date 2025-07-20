@@ -3,6 +3,10 @@ import dayjs from "dayjs";
 
 const route = useRoute();
 const yearMonth = route.params.yearMonth as string;
+const periodControllerTitle = computed(() => {
+  const formatedYearMonth = dayjs(yearMonth).format('YYYY年MM月');
+  return `${formatedYearMonth}の支出一覧`;
+});
 
 const navigateToPrevMonth = () => {
   const prevYearMonth = dayjs(yearMonth).subtract(1, "month").format("YYYY-MM");
@@ -19,7 +23,7 @@ const navigateToNextMonth = () => {
   <main class="expends-monthly-page">
     <div class="page-operation-container">
       <period-controller
-        :yearMonth="yearMonth"
+        :title="periodControllerTitle"
         @prev="navigateToPrevMonth"
         @next="navigateToNextMonth"
       />
