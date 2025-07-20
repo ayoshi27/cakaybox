@@ -1,15 +1,12 @@
 <script lang="ts" setup>
-import dayjs from 'dayjs';
 
-const props = defineProps({
-  yearMonth: {
+defineProps({
+  title: {
     type: String,
-    required: true,
   }
 });
 defineEmits(['prev', 'next']);
 
-const formatedYearMonth = dayjs(props.yearMonth).format('YYYY年MM月');
 </script>
 
 <template>
@@ -18,7 +15,7 @@ const formatedYearMonth = dayjs(props.yearMonth).format('YYYY年MM月');
       <Icon name="mdi:chevron-left" class="chevron-icon" />前月
     </BaseButton>
     <h1 class="current-year-month">
-      {{ formatedYearMonth }}の支出一覧
+      {{ title }}
     </h1>
     <BaseButton @click="$emit('next')">
       翌月

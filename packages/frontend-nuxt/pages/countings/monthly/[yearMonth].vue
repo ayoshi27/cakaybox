@@ -1,0 +1,54 @@
+<script setup lang="ts">
+import dayjs from "dayjs";
+
+const route = useRoute();
+const yearMonth = route.params.yearMonth as string;
+const periodControllerTitle = computed(() => {
+  const formatedYearMonth = dayjs(yearMonth).format('YYYY年MM月');
+  return `${formatedYearMonth}の支出集計`;
+});
+
+const navigateToPrevMonth = () => {
+  const prevYearMonth = dayjs(yearMonth).subtract(1, "month").format("YYYY-MM");
+  navigateTo("/countings/monthly/" + prevYearMonth);
+};
+
+const navigateToNextMonth = () => {
+  const nextYearMonth = dayjs(yearMonth).add(1, "month").format("YYYY-MM");
+  navigateTo("/countings/monthly/" + nextYearMonth);
+};
+</script>
+
+<template>
+  <main class="countings-monthly-page">
+    <div class="page-operation-container">
+      <period-controller
+        :title="periodControllerTitle"
+        @prev="navigateToPrevMonth"
+        @next="navigateToNextMonth"
+      />
+    </div>
+    <base-card>
+      <expend-list-table
+        :yearMonth="yearMonth"
+        ref="expendListTableRef"
+      />
+    </base-card>
+  </main>
+</template>
+
+<style lang="scss" scoped>
+.countings-monthly-page {
+  padding: 16px;
+}
+
+.base-card {
+  margin-top: 16px;
+}
+
+.page-operation-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>
