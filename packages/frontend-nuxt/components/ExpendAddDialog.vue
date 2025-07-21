@@ -16,10 +16,10 @@ const { selectOptions } = defineProps<Props>();
 const formValuePrice = ref<number | undefined>(undefined);
 const formValueDescription = ref("");
 const formValueCategory = ref<number | undefined>(
-  selectOptions.categories?.[0].id,
+  selectOptions.categories?.[0].id
 );
 const formValuePaymentMethod = ref<number | undefined>(
-  selectOptions.paymentMethods?.[0].id,
+  selectOptions.paymentMethods?.[0].id
 );
 const formValueBudget = ref<number | undefined>(selectOptions.budgets?.[0].id);
 const formValueDate = ref(dayjs().format("YYYY-MM-DD"));
@@ -34,7 +34,7 @@ const postExpendRequestBody = computed(() => {
     paymentMethodId: formValuePaymentMethod.value,
     payerId: getPayerIdByPaymentMethodId(
       formValuePaymentMethod.value,
-      selectOptions.paymentMethods,
+      selectOptions.paymentMethods
     ),
     budgetId: formValueBudget.value,
     processed: formValueIsProcessed.value,
@@ -51,6 +51,10 @@ const resetFormValue = () => {
   formValueIsProcessed.value = false;
 };
 
+const handleSubmit = () => {
+  addExpend();
+};
+
 const addExpend = async () => {
   await executePostExpend();
   emit("added-expend");
@@ -63,7 +67,7 @@ const closeAddExpendDialog = () => {
 
 const { execute: executePostExpend } = usePostData(
   "expends",
-  postExpendRequestBody,
+  postExpendRequestBody
 );
 
 defineExpose({ closeAddExpendDialog });
@@ -97,7 +101,11 @@ defineExpose({ closeAddExpendDialog });
           お気に入り
         </BaseButton>
       </div>
-      <form class="expend-add-form">
+      <form
+        id="add-expend"
+        class="expend-add-form"
+        @submit.prevent="handleSubmit"
+      >
         <BaseDatePicker
           label="日付"
           v-model="formValueDate"
@@ -134,7 +142,7 @@ defineExpose({ closeAddExpendDialog });
       <div class="dialog-footer">
         <BaseButton
           color="primary"
-          @click="addExpend"
+          form="add-expend"
           >追加</BaseButton
         >
         <BaseButton

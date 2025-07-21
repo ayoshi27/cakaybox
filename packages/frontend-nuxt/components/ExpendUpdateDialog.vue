@@ -10,7 +10,7 @@ const emit = defineEmits(["updated-expend"]);
 
 type Props = {
   expend: Expend;
-  selectOptions: SelectOptions
+  selectOptions: SelectOptions;
 };
 const { expend, selectOptions } = defineProps<Props>();
 
@@ -32,7 +32,7 @@ const putExpendRequestBody = computed(() => {
     paymentMethodId: formValuePaymentMethod.value,
     payerId: getPayerIdByPaymentMethodId(
       formValuePaymentMethod.value,
-      selectOptions.paymentMethods,
+      selectOptions.paymentMethods
     ),
     budgetId: formValueBudget.value,
     processed: formValueIsProcessed.value,
@@ -49,6 +49,10 @@ const resetFormValue = () => {
   formValueIsProcessed.value = expend.processed;
 };
 
+const handleSubmit = () => {
+  updateExpend();
+};
+
 const updateExpend = async () => {
   await executePutExpend();
   emit("updated-expend");
@@ -61,7 +65,7 @@ const closeUpdateExpendDialog = () => {
 const { execute: executePutExpend } = usePatchData(
   "expends",
   expend.id,
-  putExpendRequestBody,
+  putExpendRequestBody
 );
 
 defineExpose({ closeUpdateExpendDialog });
@@ -86,7 +90,11 @@ defineExpose({ closeUpdateExpendDialog });
           お気に入り
         </BaseButton>
       </div>
-      <form class="expend-update-form">
+      <form
+        id="update-expend"
+        class="expend-update-form"
+        @submit.prevent="handleSubmit"
+      >
         <BaseDatePicker
           label="日付"
           v-model="formValueDate"
@@ -123,13 +131,10 @@ defineExpose({ closeUpdateExpendDialog });
       <div class="dialog-footer">
         <BaseButton
           color="primary"
-          @click="updateExpend"
+          form="update-expend"
           >保存</BaseButton
         >
-        <BaseButton
-          @click="closeUpdateExpendDialog"
-          >キャンセル</BaseButton
-        >
+        <BaseButton @click="closeUpdateExpendDialog">キャンセル</BaseButton>
       </div>
     </template>
   </BaseDialog>
