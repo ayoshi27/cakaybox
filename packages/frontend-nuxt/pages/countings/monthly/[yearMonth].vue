@@ -4,8 +4,12 @@ import dayjs from "dayjs";
 const route = useRoute();
 const yearMonth = route.params.yearMonth as string;
 const periodControllerTitle = computed(() => {
-  const formatedYearMonth = dayjs(yearMonth).format('YYYY年MM月');
+  const formatedYearMonth = dayjs(yearMonth).format("YYYY年MM月");
   return `${formatedYearMonth}の支出集計`;
+});
+const toExpendsPageButtonLabel = computed(() => {
+  const formatedYearMonth = dayjs(yearMonth).format("YYYY年MM月");
+  return `${formatedYearMonth}の支出一覧`;
 });
 
 const navigateToPrevMonth = () => {
@@ -17,6 +21,10 @@ const navigateToNextMonth = () => {
   const nextYearMonth = dayjs(yearMonth).add(1, "month").format("YYYY-MM");
   navigateTo("/countings/monthly/" + nextYearMonth);
 };
+
+const navigateToExpendsPage = () => {
+  navigateTo("/expends/monthly/" + yearMonth);
+};
 </script>
 
 <template>
@@ -27,12 +35,14 @@ const navigateToNextMonth = () => {
         @prev="navigateToPrevMonth"
         @next="navigateToNextMonth"
       />
+      <BaseButton
+        color="grayscale"
+        @click="navigateToExpendsPage"
+        >{{ toExpendsPageButtonLabel }}</BaseButton
+      >
     </div>
     <base-card>
-      <expend-list-table
-        :yearMonth="yearMonth"
-        ref="expendListTableRef"
-      />
+      TODO: 集計テーブル
     </base-card>
   </main>
 </template>

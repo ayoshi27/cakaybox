@@ -4,8 +4,12 @@ import dayjs from "dayjs";
 const route = useRoute();
 const yearMonth = route.params.yearMonth as string;
 const periodControllerTitle = computed(() => {
-  const formatedYearMonth = dayjs(yearMonth).format('YYYY年MM月');
+  const formatedYearMonth = dayjs(yearMonth).format("YYYY年MM月");
   return `${formatedYearMonth}の支出一覧`;
+});
+const toCountingPageButtonLabel = computed(() => {
+  const formatedYearMonth = dayjs(yearMonth).format("YYYY年MM月");
+  return `${formatedYearMonth}の支出集計`;
 });
 
 const navigateToPrevMonth = () => {
@@ -17,6 +21,10 @@ const navigateToNextMonth = () => {
   const nextYearMonth = dayjs(yearMonth).add(1, "month").format("YYYY-MM");
   navigateTo("/expends/monthly/" + nextYearMonth);
 };
+
+const navigateToCountingPage = () => {
+  navigateTo("/countings/monthly/" + yearMonth);
+};
 </script>
 
 <template>
@@ -27,6 +35,11 @@ const navigateToNextMonth = () => {
         @prev="navigateToPrevMonth"
         @next="navigateToNextMonth"
       />
+      <BaseButton
+        color="grayscale"
+        @click="navigateToCountingPage"
+        >{{ toCountingPageButtonLabel }}</BaseButton
+      >
     </div>
     <base-card>
       <expend-list-table
