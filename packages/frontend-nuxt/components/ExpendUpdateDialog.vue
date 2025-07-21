@@ -126,6 +126,10 @@ defineExpose({ closeUpdateExpendDialog });
           @click="updateExpend"
           >保存</BaseButton
         >
+        <BaseButton
+          @click="closeUpdateExpendDialog"
+          >キャンセル</BaseButton
+        >
       </div>
     </template>
   </BaseDialog>
@@ -159,5 +163,8 @@ defineExpose({ closeUpdateExpendDialog });
 
 .dialog-footer {
   margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 </style>

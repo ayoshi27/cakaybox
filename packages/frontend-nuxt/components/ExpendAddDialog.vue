@@ -137,6 +137,10 @@ defineExpose({ closeAddExpendDialog });
           @click="addExpend"
           >追加</BaseButton
         >
+        <BaseButton
+          @click="closeAddExpendDialog"
+          >キャンセル</BaseButton
+        >
       </div>
     </template>
   </BaseDialog>
@@ -170,5 +174,8 @@ defineExpose({ closeAddExpendDialog });
 
 .dialog-footer {
   margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 </style>
