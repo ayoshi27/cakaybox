@@ -176,16 +176,16 @@ await fetchInitialSelectOptions();
   >
     <thead>
       <tr>
-        <th>日付</th>
-        <th>料金</th>
-        <th class="description-cell">内容</th>
-        <th>カテゴリー</th>
-        <th>支払者</th>
-        <th>支払方法</th>
-        <th>支払元</th>
-        <th>精算済</th>
-        <th>編集</th>
-        <th>削除</th>
+        <th class="date-th-cell">日付</th>
+        <th class="price-th-cell">料金</th>
+        <th class="description-th-cell">内容</th>
+        <th class="category-th-cell">カテゴリー</th>
+        <th class="payer-th-cell">支払者</th>
+        <th class="payment-method-th-cell">支払方法</th>
+        <th class="budget-th-cell">支払元</th>
+        <th class="processed-th-cell">精算済</th>
+        <th class="edit-th-cell">編集</th>
+        <th class="delete-th-cell">削除</th>
       </tr>
     </thead>
     <tbody>
@@ -269,17 +269,28 @@ await fetchInitialSelectOptions();
   color: var(--color-text-saturday);
 }
 
+.date-th-cell {
+  width: 80px;
+}
+.price-th-cell {
+  width: 100px;
+}
+.price-th-cell,
 .price-cell {
   text-align: right;
 }
-.description-cell {
-  min-width: 250px;
+.description-th-cell {
+  width: 350px;
+}
+.edit-th-cell,
+.delete-th-cell,
+.processed-th-cell {
+  width: 80px;
 }
 
 .category-icon {
   font-size: 14px;
 }
-
 .processed-icon {
   display: block;
   margin: auto auto auto 0;

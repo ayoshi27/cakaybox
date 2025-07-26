@@ -4,16 +4,24 @@ const props = defineProps({
   stickyHeader: {
     type: Boolean,
     required: false,
-    default: false
-  }
-})
+    default: false,
+  },
+  layout: {
+    type: String as () => "auto" | "fixed",
+    required: false,
+    default: "fixed",
+    validator: (value: string) => ["auto", "fixed"].includes(value),
+  },
+});
 
-const stickyHeaderClass = props.stickyHeader ? 'sticky-header' : ''
+const stickyHeaderClass = props.stickyHeader ? "sticky-header" : "";
+const tableLayoutClass =
+  props.layout === "fixed" ? "table-layout-fixed" : "table-layout-auto";
 </script>
 
 <template>
   <div :class="['table-container', stickyHeaderClass]">
-    <table class="base-table">
+    <table :class="['base-table', tableLayoutClass]">
       <slot></slot>
     </table>
   </div>
@@ -34,6 +42,9 @@ const stickyHeaderClass = props.stickyHeader ? 'sticky-header' : ''
   width: 100%;
   font-size: var(--font-size-table-cell);
 }
+.table-layout-fixed {
+  table-layout: fixed;
+}
 
 :slotted(tr) {
   border-bottom: 1px solid #e0e0e0;
@@ -42,7 +53,6 @@ const stickyHeaderClass = props.stickyHeader ? 'sticky-header' : ''
 :slotted(th),
 :slotted(td) {
   padding: 0 10px;
-  white-space: nowrap;
 }
 
 :slotted(th) {
@@ -50,11 +60,11 @@ const stickyHeaderClass = props.stickyHeader ? 'sticky-header' : ''
   font-weight: bold;
   height: 56px;
 
-  &+th {
+  & + th {
     position: relative;
   }
 
-  &+th::after {
+  & + th::after {
     content: "";
     display: block;
     height: 14px;
