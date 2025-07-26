@@ -669,6 +669,33 @@ export declare const contract: {
                 }>, "many">;
             };
         };
+        newGetList: {
+            query: import("zod").ZodObject<{
+                yearMonth: import("zod").ZodString;
+            }, "strip", import("zod").ZodTypeAny, {
+                yearMonth: string;
+            }, {
+                yearMonth: string;
+            }>;
+            summary: "新しいカスタム集計項目リストを取得する";
+            method: "GET";
+            path: "/new-custom-counting-items";
+            responses: {
+                200: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodNumber;
+                    name: import("zod").ZodString;
+                    price: import("zod").ZodNumber;
+                }, "strip", import("zod").ZodTypeAny, {
+                    id: number;
+                    name: string;
+                    price: number;
+                }, {
+                    id: number;
+                    name: string;
+                    price: number;
+                }>, "many">;
+            };
+        };
     };
     favoriteExpendItem: {
         getList: {

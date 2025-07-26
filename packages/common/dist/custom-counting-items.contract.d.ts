@@ -188,4 +188,31 @@ export declare const customCountingItemsContract: {
             }>, "many">;
         };
     };
+    newGetList: {
+        query: z.ZodObject<{
+            yearMonth: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            yearMonth: string;
+        }, {
+            yearMonth: string;
+        }>;
+        summary: "新しいカスタム集計項目リストを取得する";
+        method: "GET";
+        path: "/new-custom-counting-items";
+        responses: {
+            200: z.ZodArray<z.ZodObject<{
+                id: z.ZodNumber;
+                name: z.ZodString;
+                price: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                id: number;
+                name: string;
+                price: number;
+            }, {
+                id: number;
+                name: string;
+                price: number;
+            }>, "many">;
+        };
+    };
 };

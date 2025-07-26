@@ -32,6 +32,11 @@ const CustomCountingItemsSchema = zod_1.z.object({
         processed: zod_1.z.array(zod_1.z.boolean()),
     })),
 });
+const NewCustomCountingItemsSchema = zod_1.z.object({
+    id: zod_1.z.number(),
+    name: zod_1.z.string(),
+    price: zod_1.z.number(),
+});
 const c = (0, core_1.initContract)();
 exports.customCountingItemsContract = c.router({
     getList: {
@@ -42,4 +47,15 @@ exports.customCountingItemsContract = c.router({
         },
         summary: 'カスタム集計項目リストを取得する',
     },
+    newGetList: {
+        method: 'GET',
+        path: '/new-custom-counting-items',
+        query: zod_1.z.object({
+            yearMonth: zod_1.z.string(),
+        }),
+        responses: {
+            200: NewCustomCountingItemsSchema.array(),
+        },
+        summary: '新しいカスタム集計項目リストを取得する',
+    }
 });
