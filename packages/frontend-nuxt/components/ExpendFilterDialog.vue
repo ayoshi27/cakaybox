@@ -68,7 +68,7 @@ const emit = defineEmits(["added-expend", "apply-filter"]);
           お気に入り
         </BaseButton>
       </div>
-      <form class="expend-filter-form">
+      <form class="expend-filter-form" @submit.prevent="applyFilter">
         <BaseInputText
           label="フリーワード"
           v-model="searchWord"
@@ -105,7 +105,6 @@ const emit = defineEmits(["added-expend", "apply-filter"]);
       <div class="dialog-footer">
         <BaseButton
           color="primary"
-          @click="applyFilter"
           >表示</BaseButton
         >
       </div>
