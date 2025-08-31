@@ -12,6 +12,8 @@ export type MonthlyCalculatedPriceForCategory = {
   id: number;
   /** カテゴリ名 */
   categoryName: string;
+  /** カテゴリーに割り当てられたカラーコード */
+  categoryColorCode: string;
   /** カテゴリの集計金額 */
   price: number;
 };

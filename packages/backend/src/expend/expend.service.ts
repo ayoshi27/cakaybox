@@ -192,6 +192,7 @@ export class ExpendService {
       return {
         id: category.id,
         categoryName: category.name,
+        categoryColorCode: category.colorCode,
         price: sum,
       };
     });

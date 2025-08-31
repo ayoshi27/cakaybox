@@ -58,6 +58,7 @@ const getAnnualCalculatedExpendSchema = z.object({
 const MonthlyCalculatedExpendSchema = z.object({
   id: z.number(),
   categoryName: z.string(),
+  categoryColorCode: z.string(),
   price: z.number(),
 });
 

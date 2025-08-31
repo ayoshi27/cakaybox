@@ -303,15 +303,18 @@ export declare const expendsContract: {
             200: z.ZodArray<z.ZodObject<{
                 id: z.ZodNumber;
                 categoryName: z.ZodString;
+                categoryColorCode: z.ZodString;
                 price: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 id: number;
                 price: number;
                 categoryName: string;
+                categoryColorCode: string;
             }, {
                 id: number;
                 price: number;
                 categoryName: string;
+                categoryColorCode: string;
             }>, "many">;
         };
     };

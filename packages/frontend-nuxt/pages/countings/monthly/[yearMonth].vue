@@ -98,7 +98,16 @@ await Promise.all([
               v-for="category in monthlyCalculatedPriceForCategory"
               :key="category.id"
             >
-              <td>{{ category.categoryName }}</td>
+              <td>
+                <div class="category-cell-content">
+                  <Icon
+                    name="mdi:local-offer"
+                    :style="categoryIconStyle(category.categoryColorCode)"
+                    class="category-icon"
+                  />
+                  {{ category.categoryName }}
+                </div>
+              </td>
               <td>{{ formatPrice(category.price) }}</td>
             </tr>
           </tbody>

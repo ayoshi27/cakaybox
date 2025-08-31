@@ -56,6 +56,7 @@ const getAnnualCalculatedExpendSchema = zod_1.z.object({
 const MonthlyCalculatedExpendSchema = zod_1.z.object({
     id: zod_1.z.number(),
     categoryName: zod_1.z.string(),
+    categoryColorCode: zod_1.z.string(),
     price: zod_1.z.number(),
 });
 const c = (0, core_1.initContract)();

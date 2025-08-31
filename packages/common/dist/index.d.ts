@@ -303,15 +303,18 @@ export declare const contract: {
                 200: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodNumber;
                     categoryName: import("zod").ZodString;
+                    categoryColorCode: import("zod").ZodString;
                     price: import("zod").ZodNumber;
                 }, "strip", import("zod").ZodTypeAny, {
                     id: number;
                     price: number;
                     categoryName: string;
+                    categoryColorCode: string;
                 }, {
                     id: number;
                     price: number;
                     categoryName: string;
+                    categoryColorCode: string;
                 }>, "many">;
             };
         };
