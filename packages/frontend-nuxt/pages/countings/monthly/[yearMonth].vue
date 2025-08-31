@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
-import type { CustomCountingItem } from "~/types/custom-counting-item.type";
+import type {
+  CustomCountingItem,
+  MonthlyCalculatedPriceForCategory,
+} from "~/types/custom-counting-item.type";
 
 const route = useRoute();
 const yearMonth = route.params.yearMonth as string;
@@ -32,7 +35,20 @@ const { data: customCountingItems, execute: fetchCustomCountingItems } =
     yearMonth,
   });
 
-await fetchCustomCountingItems();
+const {
+  data: monthlyCalculatedPriceForCategory,
+  execute: fetchMonthlyCalculatedPriceForCategory,
+} = useAsyncApiFetchData<MonthlyCalculatedPriceForCategory[]>(
+  "expends/monthly-calculated",
+  {
+    yearMonth,
+  }
+);
+
+await Promise.all([
+  fetchCustomCountingItems(),
+  fetchMonthlyCalculatedPriceForCategory(),
+]);
 </script>
 
 <template>
@@ -70,7 +86,23 @@ await fetchCustomCountingItems();
         </base-table>
       </base-card>
       <base-card title="カテゴリー別集計一覧">
-        TODO: カテゴリー別集計項目
+        <base-table>
+          <thead>
+            <tr>
+              <th>カテゴリー名</th>
+              <th>金額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="category in monthlyCalculatedPriceForCategory"
+              :key="category.id"
+            >
+              <td>{{ category.categoryName }}</td>
+              <td>{{ formatPrice(category.price) }}</td>
+            </tr>
+          </tbody>
+        </base-table>
       </base-card>
     </div>
   </main>
