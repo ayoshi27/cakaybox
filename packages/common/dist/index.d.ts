@@ -288,6 +288,33 @@ export declare const contract: {
                 }>, "many">;
             };
         };
+        getMonthlyCalculatedExpend: {
+            query: import("zod").ZodObject<{
+                yearMonth: import("zod").ZodString;
+            }, "strip", import("zod").ZodTypeAny, {
+                yearMonth: string;
+            }, {
+                yearMonth: string;
+            }>;
+            summary: "月間支出のカテゴリ別の計算結果を取得する";
+            method: "GET";
+            path: "/expends/monthly-calculated";
+            responses: {
+                200: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodNumber;
+                    categoryName: import("zod").ZodString;
+                    price: import("zod").ZodNumber;
+                }, "strip", import("zod").ZodTypeAny, {
+                    id: number;
+                    price: number;
+                    categoryName: string;
+                }, {
+                    id: number;
+                    price: number;
+                    categoryName: string;
+                }>, "many">;
+            };
+        };
     };
     budgets: {
         getList: {

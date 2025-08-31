@@ -153,4 +153,47 @@ export class ExpendService {
       };
     });
   }
+
+  /**
+   * 月毎のカテゴリー別支出合計を取得する
+   */
+  async getMonthlyCalculatedExpend(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.ExpendWhereUniqueInput;
+    where?: Prisma.ExpendWhereInput;
+    orderBy?: Prisma.ExpendOrderByWithRelationInput[];
+  }) {
+    const { skip, take, cursor, where, orderBy } = params;
+    const expends = await this.prisma.expend.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    const categories = await this.categoryService.getList({
+      orderBy: { id: 'asc' },
+    });
+    return categories.map((category) => {
+      const sum = expends.reduce((acc: number, expend) => {
+        return expend.categoryId === category.id ? acc + expend.price : acc;
+      }, 0);
+
+      return {
+        id: category.id,
+        categoryName: category.name,
+        price: sum,
+      };
+    });
+  }
 }

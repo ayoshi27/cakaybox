@@ -288,4 +288,31 @@ export declare const expendsContract: {
             }>, "many">;
         };
     };
+    getMonthlyCalculatedExpend: {
+        query: z.ZodObject<{
+            yearMonth: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            yearMonth: string;
+        }, {
+            yearMonth: string;
+        }>;
+        summary: "月間支出のカテゴリ別の計算結果を取得する";
+        method: "GET";
+        path: "/expends/monthly-calculated";
+        responses: {
+            200: z.ZodArray<z.ZodObject<{
+                id: z.ZodNumber;
+                categoryName: z.ZodString;
+                price: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                id: number;
+                price: number;
+                categoryName: string;
+            }, {
+                id: number;
+                price: number;
+                categoryName: string;
+            }>, "many">;
+        };
+    };
 };
