@@ -5,7 +5,7 @@ import BaseDialog from "./base/Dialog.vue";
 
 type Props = {
   selectOptions: SelectOptions;
-  isFiltered: boolean
+  isFiltered: boolean;
 };
 const { selectOptions, isFiltered } = defineProps<Props>();
 
@@ -38,7 +38,7 @@ const applyFilter = () => {
 
 const filterButtonIcon = computed(() => {
   return isFiltered ? "mdi:filter" : "mdi:filter-outline";
-})
+});
 
 const emit = defineEmits(["added-expend", "apply-filter"]);
 </script>
@@ -68,7 +68,11 @@ const emit = defineEmits(["added-expend", "apply-filter"]);
           お気に入り
         </BaseButton>
       </div>
-      <form class="expend-filter-form" @submit.prevent="applyFilter">
+      <form
+        class="expend-filter-form"
+        @submit.prevent="applyFilter"
+        id="expend-filter-form"
+      >
         <BaseInputText
           label="フリーワード"
           v-model="searchWord"
@@ -104,6 +108,7 @@ const emit = defineEmits(["added-expend", "apply-filter"]);
       </form>
       <div class="dialog-footer">
         <BaseButton
+          form="expend-filter-form"
           color="primary"
           >表示</BaseButton
         >
