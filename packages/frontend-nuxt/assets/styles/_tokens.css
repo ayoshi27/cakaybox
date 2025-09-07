@@ -29,4 +29,10 @@ body {
 
   font-family: "Noto Sans", Roboto, sans-serif;
   color: var(--color-body);
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
 }

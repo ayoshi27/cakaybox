@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
 import BaseDialog from "./base/Dialog.vue";
+import BaseListItem from "./base/ListItem.vue";
 import type { SelectOptions } from "./ExpendListTable/ExpendListTable.vue";
 import { getPayerIdByPaymentMethodId } from "~/utils/finder";
+import type { FavoriteExpendItem } from "~/types/expend.type";
 
 const dialogRef = ref<InstanceType<typeof BaseDialog>>();
 const emit = defineEmits(["added-expend"]);
@@ -11,6 +13,8 @@ type Props = {
   selectOptions: SelectOptions;
 };
 const { selectOptions } = defineProps<Props>();
+
+const favoriteItemsRef = useTemplateRef<HTMLElement>("favoriteItemsRef");
 
 // フォーム入力値
 const formValuePrice = ref<number | undefined>(undefined);
@@ -41,6 +45,14 @@ const postExpendRequestBody = computed(() => {
   };
 });
 
+const setFormValue = (data: Partial<typeof postExpendRequestBody.value>) => {
+  if (data.description !== undefined) formValueDescription.value = data.description;
+  if (data.categoryId  !== undefined) formValueCategory.value = data.categoryId;
+  if (data.paymentMethodId  !== undefined) formValuePaymentMethod.value = data.paymentMethodId;
+  if (data.budgetId  !== undefined) formValueBudget.value = data.budgetId;
+  if (data.processed !== undefined) formValueIsProcessed.value = data.processed;
+};
+
 const resetFormValue = () => {
   formValueDate.value = dayjs().format("YYYY-MM-DD");
   formValuePrice.value = undefined;
@@ -65,12 +77,29 @@ const closeAddExpendDialog = () => {
   dialogRef.value?.closeDialog();
 };
 
+const { data: favoriteExpendItems, execute: fetchFavoriteExpendItems } =
+  useAsyncApiFetchData<FavoriteExpendItem[]>("favorite-expend-items");
+
+const handleClickFavoriteItem = (item: FavoriteExpendItem) => {
+  console.log(item);
+  setFormValue({
+    description: item.description,
+    categoryId: item.category.id,
+    paymentMethodId: item.paymentMethod.id,
+    budgetId: item.budget.id,
+    processed: item.processed,
+  });
+  favoriteItemsRef.value?.hidePopover();
+};
+
 const { execute: executePostExpend } = usePostData(
   "expends",
   postExpendRequestBody
 );
 
 defineExpose({ closeAddExpendDialog });
+
+await fetchFavoriteExpendItems();
 </script>
 
 <template>
@@ -93,7 +122,11 @@ defineExpose({ closeAddExpendDialog });
     <template #contents>
       <div class="dialog-header">
         <h1 class="dialog-title">支出を追加</h1>
-        <BaseButton>
+        <BaseButton
+          popovertarget="favorite-items"
+          id="favorite-button"
+          class="favorite-button"
+        >
           <icon
             name="mdi:heart-outline"
             class="heart-icon"
@@ -101,6 +134,23 @@ defineExpose({ closeAddExpendDialog });
           お気に入り
         </BaseButton>
       </div>
+
+      <div
+        ref="favoriteItemsRef"
+        id="favorite-items"
+        popover
+        class="favorite-items-popover"
+      >
+        <ul>
+          <BaseListItem
+            v-for="favoriteItem in favoriteExpendItems"
+            :key="favoriteItem.id"
+            @click="handleClickFavoriteItem(favoriteItem)"
+            >{{ favoriteItem.name }}</BaseListItem
+          >
+        </ul>
+      </div>
+
       <form
         id="add-expend"
         class="expend-add-form"
@@ -138,18 +188,15 @@ defineExpose({ closeAddExpendDialog });
           label="精算済"
           v-model="formValueIsProcessed"
         ></BaseCheckBox>
+        <div class="dialog-footer">
+          <BaseButton
+            color="primary"
+            form="add-expend"
+            >追加</BaseButton
+          >
+          <BaseButton @click="closeAddExpendDialog">キャンセル</BaseButton>
+        </div>
       </form>
-      <div class="dialog-footer">
-        <BaseButton
-          color="primary"
-          form="add-expend"
-          >追加</BaseButton
-        >
-        <BaseButton
-          @click="closeAddExpendDialog"
-          >キャンセル</BaseButton
-        >
-      </div>
     </template>
   </BaseDialog>
 </template>
@@ -181,9 +228,25 @@ defineExpose({ closeAddExpendDialog });
 }
 
 .dialog-footer {
-  margin-top: 8px;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
+}
+
+.favorite-button {
+  anchor-name: --favorite-button;
+}
+
+.favorite-items-popover {
+  border: none;
+  border-radius: 4px;
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.2);
+
+  padding: 0;
+  position-anchor: --favorite-button;
+  position: absolute;
+  left: anchor(left);
+  top: anchor(bottom);
+  margin: 0;
 }
 </style>
