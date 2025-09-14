@@ -23,22 +23,22 @@ async function main() {
   //     name: '食費',
   //   },
   // });
-  await prisma.category.createMany({
-    data: [
-      // { name: '食費', code: 'food', colorCode: 'eb9665' },
-      // { name: '雑貨', code: 'goods', colorCode: '65a6eb' },
-      // { name: 'お小遣い', code: 'personal', colorCode: 'ebba65' },
-      // { name: 'その他', code: 'others', colorCode: '#b365eb' },
-      // { name: '貯金', code: 'savings', colorCode: 'ebd465' },
-      // { name: '旅行', code: 'travel', colorCode: 'eb65cb' },
-      // { name: 'イベント', code: 'event', colorCode: '7deb65' },
-      // { name: '電気代', code: 'electric', colorCode: 'dbeb65' },
-      // { name: '水道ガス', code: 'utility', colorCode: '65ebe8' },
-      // { name: 'ちばぎん', code: 'chibagin', colorCode: 'eb6e65' },
-      // { name: '毎月', code: 'monthly', colorCode: '65eb9d' },
-      { name: '自動車維持費', code: 'car', colorCode: '6965eb' },
-    ],
-  });
+  // await prisma.category.createMany({
+  //   data: [
+  //     // { name: '食費', code: 'food', colorCode: 'eb9665' },
+  //     // { name: '雑貨', code: 'goods', colorCode: '65a6eb' },
+  //     // { name: 'お小遣い', code: 'personal', colorCode: 'ebba65' },
+  //     // { name: 'その他', code: 'others', colorCode: '#b365eb' },
+  //     // { name: '貯金', code: 'savings', colorCode: 'ebd465' },
+  //     // { name: '旅行', code: 'travel', colorCode: 'eb65cb' },
+  //     // { name: 'イベント', code: 'event', colorCode: '7deb65' },
+  //     // { name: '電気代', code: 'electric', colorCode: 'dbeb65' },
+  //     // { name: '水道ガス', code: 'utility', colorCode: '65ebe8' },
+  //     // { name: 'ちばぎん', code: 'chibagin', colorCode: 'eb6e65' },
+  //     // { name: '毎月', code: 'monthly', colorCode: '65eb9d' },
+  //     { name: '自動車維持費', code: 'car', colorCode: '6965eb' },
+  //   ],
+  // });
   // await prisma.budget.createMany({
   //   data: [
   //     { name: '共同支出', code: 'shared' },
@@ -107,7 +107,7 @@ async function main() {
   //       categoryId: 6,
   //       budgetId: 1,
   //       paymentMethodId: 1,
-  //       payerId: 1, 
+  //       payerId: 1,
   //     },
   //     {
   //       date: '2023-11-07',
@@ -1163,45 +1163,24 @@ async function main() {
   // await prisma.favoriteExpendItem.createMany({
   //   data: [
   //     {
-  //       id: 0,
+  //       id: 8,
   //       date: '',
-  //       code: 'aeonfood',
-  //       name: 'イオン食材',
+  //       code: 'matsukiyo',
+  //       name: 'マツキヨ',
   //       price: 0,
-  //       description: 'イオン',
-  //       categoryId: 1,
+  //       description: 'マツキヨ雑貨',
+  //       categoryId: 2,
   //       payerId: 1,
   //       budgetId: 1,
   //       paymentMethodId: 1,
   //       processed: false,
   //     },
-  //     {
-  //       id: 1,
-  //       date: '',
-  //       code: 'akihiro7',
-  //       name: '明弘７',
-  //       price: 0,
-  //       description: '7:',
-  //       categoryId: 3,
-  //       payerId: 1,
-  //       budgetId: 2,
-  //       paymentMethodId: 1,
-  //       processed: false,
-  //     },
-  //     {
-  //       id: 2,
-  //       date: '',
-  //       code: 'akihiroprivate',
-  //       name: '明弘個人',
-  //       price: 0,
-  //       description: '',
-  //       categoryId: 3,
-  //       payerId: 1,
-  //       budgetId: 2,
-  //       paymentMethodId: 1,
-  //       processed: false,
-  //     },
   //   ],
+  // });
+  // await prisma.favoriteExpendItem.delete({
+  //   where: {
+  //     id: 0,
+  //   },
   // });
   // await prisma.countingItem.create({
   //   data: {
