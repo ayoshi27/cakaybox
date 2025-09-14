@@ -194,7 +194,7 @@ await fetchFavoriteExpendItems();
             form="add-expend"
             >追加</BaseButton
           >
-          <BaseButton @click="closeAddExpendDialog">キャンセル</BaseButton>
+          <BaseButton type="button" @click="closeAddExpendDialog">キャンセル</BaseButton>
         </div>
       </form>
     </template>
