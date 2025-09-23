@@ -5,6 +5,8 @@ import BaseListItem from "./base/ListItem.vue";
 import type { SelectOptions } from "./ExpendListTable/ExpendListTable.vue";
 import { getPayerIdByPaymentMethodId } from "~/utils/finder";
 import type { FavoriteExpendItem } from "~/types/expend.type";
+import { useForm, type InvalidSubmissionContext } from "vee-validate";
+import { expendAddDialogSchema } from "./expend-add-dialog.schema";
 
 const dialogRef = ref<InstanceType<typeof BaseDialog>>();
 const emit = defineEmits(["added-expend"]);
@@ -16,8 +18,18 @@ const { selectOptions } = defineProps<Props>();
 
 const favoriteItemsRef = useTemplateRef<HTMLElement>("favoriteItemsRef");
 
+const {
+  handleSubmit: handleSubmitExpendAddForm,
+  errors,
+  defineField,
+  resetForm,
+  setFieldValue,
+} = useForm({
+  validationSchema: expendAddDialogSchema,
+});
+const [price, priceProps] = defineField("price");
+
 // フォーム入力値
-const formValuePrice = ref<number | undefined>(undefined);
 const formValueDescription = ref("");
 const formValueCategory = ref<number | undefined>(
   selectOptions.categories?.[0].id
@@ -32,7 +44,7 @@ const formValueIsProcessed = ref(false);
 const postExpendRequestBody = computed(() => {
   return {
     date: formValueDate.value,
-    price: formValuePrice.value || 0,
+    price: price.value || 0,
     description: formValueDescription.value,
     categoryId: formValueCategory.value,
     paymentMethodId: formValuePaymentMethod.value,
@@ -46,31 +58,40 @@ const postExpendRequestBody = computed(() => {
 });
 
 const setFormValue = (data: Partial<typeof postExpendRequestBody.value>) => {
-  if (data.description !== undefined) formValueDescription.value = data.description;
-  if (data.categoryId  !== undefined) formValueCategory.value = data.categoryId;
-  if (data.paymentMethodId  !== undefined) formValuePaymentMethod.value = data.paymentMethodId;
-  if (data.budgetId  !== undefined) formValueBudget.value = data.budgetId;
+  if (data.description !== undefined)
+    formValueDescription.value = data.description;
+  if (data.categoryId !== undefined) formValueCategory.value = data.categoryId;
+  if (data.paymentMethodId !== undefined)
+    formValuePaymentMethod.value = data.paymentMethodId;
+  if (data.budgetId !== undefined) formValueBudget.value = data.budgetId;
   if (data.processed !== undefined) formValueIsProcessed.value = data.processed;
 };
 
 const resetFormValue = () => {
   formValueDate.value = dayjs().format("YYYY-MM-DD");
-  formValuePrice.value = undefined;
+  setFieldValue("price", 0);
+  price.value = undefined;
   formValueDescription.value = "";
   formValueCategory.value = selectOptions.categories?.[0].id;
   formValuePaymentMethod.value = selectOptions.paymentMethods?.[0].id;
   formValueBudget.value = selectOptions.budgets?.[0].id;
   formValueIsProcessed.value = false;
+  resetForm();
 };
 
-const handleSubmit = () => {
-  addExpend();
-};
-
-const addExpend = async () => {
+const onValidationSuccess = async () => {
   await executePostExpend();
   emit("added-expend");
 };
+
+const onValidationError = (context: InvalidSubmissionContext) => {
+  if (context.results) return;
+};
+
+const handleSubmit = handleSubmitExpendAddForm(
+  onValidationSuccess,
+  onValidationError
+);
 
 const closeAddExpendDialog = () => {
   resetFormValue();
@@ -162,9 +183,16 @@ await fetchFavoriteExpendItems();
         />
         <BaseInputText
           label="料金"
-          v-model.number="formValuePrice"
+          v-bind="priceProps"
+          v-model.number="price"
           auto-focus
         />
+        <p
+          v-if="errors.price"
+          class="error-message"
+        >
+          {{ errors.price }}
+        </p>
         <BaseInputText
           label="内容"
           v-model="formValueDescription"
@@ -194,7 +222,11 @@ await fetchFavoriteExpendItems();
             form="add-expend"
             >追加</BaseButton
           >
-          <BaseButton type="button" @click="closeAddExpendDialog">キャンセル</BaseButton>
+          <BaseButton
+            type="button"
+            @click="closeAddExpendDialog"
+            >キャンセル</BaseButton
+          >
         </div>
       </form>
     </template>
@@ -225,6 +257,12 @@ await fetchFavoriteExpendItems();
   display: grid;
   gap: 8px;
   margin-top: 8px;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  text-align: right;
 }
 
 .dialog-footer {
