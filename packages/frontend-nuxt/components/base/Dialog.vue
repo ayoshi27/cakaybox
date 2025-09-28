@@ -13,7 +13,7 @@ defineSlots<{
 }>();
 
 defineEmits(["close"]);
-defineExpose({ closeDialog });
+defineExpose({ closeDialog, showDialog });
 </script>
 
 <template>

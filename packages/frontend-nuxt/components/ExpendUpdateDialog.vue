@@ -58,6 +58,10 @@ const updateExpend = async () => {
   emit("updated-expend");
 };
 
+const showDialog = () => {
+  dialogRef.value?.showDialog();
+};
+
 const closeUpdateExpendDialog = () => {
   dialogRef.value?.closeDialog();
 };
@@ -68,7 +72,10 @@ const { execute: executePutExpend } = usePatchData(
   putExpendRequestBody
 );
 
-defineExpose({ closeUpdateExpendDialog });
+defineExpose({
+  closeUpdateExpendDialog,
+  showDialog,
+});
 </script>
 
 <template>
@@ -76,9 +83,6 @@ defineExpose({ closeUpdateExpendDialog });
     @close="resetFormValue"
     ref="dialogRef"
   >
-    <template #trigger="{ showDialog }">
-      <BaseButton @click="showDialog">編集</BaseButton>
-    </template>
     <template #contents>
       <div class="dialog-header">
         <h1 class="dialog-title">支出を編集</h1>

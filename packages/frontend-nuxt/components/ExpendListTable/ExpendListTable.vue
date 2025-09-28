@@ -23,7 +23,7 @@ const props = defineProps({
 const expendAddDialogRef =
   useTemplateRef<InstanceType<typeof ExpendAddDialog>>("expendAddDialogRef");
 const expendUpdateDialogRef = useTemplateRef<
-  InstanceType<typeof ExpendUpdateDialog>[]
+  InstanceType<typeof ExpendUpdateDialog>
 >("expendUpdateDialogRef");
 
 const {
@@ -114,12 +114,28 @@ const onAddedExpend = async () => {
 };
 
 /**
+ * 編集対象として選択された支出レコード
+ */
+const selectedExpend = ref<Expend | null>(null);
+
+/**
+ * 「編集」ボタンクリックの処理
+ * @param expend - 編集対象の支出
+ */
+const handlwClickEditButton = async (expend: Expend) => {
+  selectedExpend.value = expend;
+  await nextTick();
+  
+  expendUpdateDialogRef.value?.showDialog();
+};
+
+/**
  * ダイアログから支出を編集した際の処理
  * 支出一覧を更新してダイアログを閉じる
  */
-const onUpdatedExpend = async (index: number) => {
+const onUpdatedExpend = async () => {
   await refreshExpends();
-  expendUpdateDialogRef.value?.[index].closeUpdateExpendDialog();
+  expendUpdateDialogRef.value?.closeUpdateExpendDialog();
 };
 
 /**
@@ -128,11 +144,11 @@ const onUpdatedExpend = async (index: number) => {
  */
 const deleteExpend = async (expendId: number) => {
   const tagertExpendDescription = expends.value?.find(
-    (expend) => expend.id === expendId,
+    (expend) => expend.id === expendId
   )?.description;
   if (
     !confirm(
-      `・${tagertExpendDescription}\n\nこの支出を削除します。よろしいですか？`,
+      `・${tagertExpendDescription}\n\nこの支出を削除します。よろしいですか？`
     )
   )
     return;
@@ -190,7 +206,7 @@ await fetchInitialSelectOptions();
     </thead>
     <tbody>
       <tr
-        v-for="(expend, index) in filteredExpends"
+        v-for="expend in filteredExpends"
         :key="expend.id"
       >
         <td :class="tableDateCellCssClass(expend.date)">
@@ -218,12 +234,7 @@ await fetchInitialSelectOptions();
           />
         </td>
         <td>
-          <ExpendUpdateDialog
-            :expend="expend"
-            @updated-expend="onUpdatedExpend(index)"
-            :select-options="selectOptions"
-            ref="expendUpdateDialogRef"
-          />
+          <BaseButton @click="handlwClickEditButton(expend)">編集</BaseButton>
         </td>
         <td>
           <BaseButton
@@ -235,6 +246,14 @@ await fetchInitialSelectOptions();
       </tr>
     </tbody>
   </BaseTable>
+
+  <ExpendUpdateDialog
+    v-if="selectedExpend !== null"
+    :expend="selectedExpend"
+    @updated-expend="onUpdatedExpend"
+    :select-options="selectOptions"
+    ref="expendUpdateDialogRef"
+  />
 </template>
 
 <style lang="scss" scoped>
