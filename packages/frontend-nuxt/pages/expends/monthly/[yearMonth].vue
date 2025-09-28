@@ -42,10 +42,17 @@ const navigateToCountingPage = () => {
       >
     </div>
     <base-card>
-      <expend-list-table
-        :yearMonth="yearMonth"
-        ref="expendListTableRef"
-      />
+      <Suspense>
+        <template #default>
+          <expend-list-table
+            :yearMonth="yearMonth"
+            ref="expendListTableRef"
+          />
+        </template>
+        <template #fallback>
+          <expend-list-table-skelton />
+        </template>
+      </Suspense>
     </base-card>
   </main>
 </template>
