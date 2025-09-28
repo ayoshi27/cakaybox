@@ -55,6 +55,7 @@ const handleSubmit = () => {
 
 const updateExpend = async () => {
   await executePutExpend();
+  closeUpdateExpendDialog();
   emit("updated-expend");
 };
 
@@ -66,20 +67,20 @@ const closeUpdateExpendDialog = () => {
   dialogRef.value?.closeDialog();
 };
 
-const { execute: executePutExpend } = usePatchData(
+const { execute: executePutExpend, status: putExpendStatus } = usePatchData(
   "expends",
   expend.id,
   putExpendRequestBody
 );
 
 defineExpose({
-  closeUpdateExpendDialog,
   showDialog,
 });
 </script>
 
 <template>
   <BaseDialog
+    :is-loading="putExpendStatus === 'pending'"
     @close="resetFormValue"
     ref="dialogRef"
   >

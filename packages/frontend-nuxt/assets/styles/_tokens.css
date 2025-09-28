@@ -21,6 +21,8 @@
 
   --font-size-icon: 24px;
   --font-size-table-cell: 14px;
+
+  --z-index-overlay: 1000;
 }
 
 /* global styles */

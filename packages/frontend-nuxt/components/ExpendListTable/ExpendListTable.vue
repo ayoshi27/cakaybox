@@ -12,6 +12,7 @@ import ExpendFilterDialog from "../ExpendFilterDialog.vue";
 import { filterExpends } from "./ExpendListTable.modules";
 import type { FilterConditionForExpendList } from "./ExpendListTable.types";
 import { initialFilterValues } from "../ExpendListTable/ExpendListTable.const";
+import LoadingOverlay from "../base/LoadingOverlay.vue";
 
 const props = defineProps({
   yearMonth: {
@@ -30,6 +31,7 @@ const {
   data: expends,
   execute: fetchExpends,
   refresh: refreshExpends,
+  status: fetchExpendsStatus,
 } = useAsyncApiFetchData<Expend[]>("expends", { yearMonth: props.yearMonth });
 
 /**
@@ -108,9 +110,8 @@ const selectOptions = computed<SelectOptions>(() => {
  * ダイアログから支出を追加した際の処理
  * 支出一覧を更新してダイアログを閉じる
  */
-const onAddedExpend = async () => {
-  await refreshExpends();
-  expendAddDialogRef.value?.closeAddExpendDialog();
+const onAddedExpend = () => {
+  refreshExpends();
 };
 
 /**
@@ -125,7 +126,7 @@ const selectedExpend = ref<Expend | null>(null);
 const handlwClickEditButton = async (expend: Expend) => {
   selectedExpend.value = expend;
   await nextTick();
-  
+
   expendUpdateDialogRef.value?.showDialog();
 };
 
@@ -135,7 +136,6 @@ const handlwClickEditButton = async (expend: Expend) => {
  */
 const onUpdatedExpend = async () => {
   await refreshExpends();
-  expendUpdateDialogRef.value?.closeUpdateExpendDialog();
 };
 
 /**
@@ -161,6 +161,10 @@ await fetchInitialSelectOptions();
 </script>
 
 <template>
+  <LoadingOverlay
+    v-if="fetchExpendsStatus === 'pending'"
+    is-fixed
+  />
   <div class="controller-panel">
     <ExpendAddDialog
       :select-options="selectOptions"

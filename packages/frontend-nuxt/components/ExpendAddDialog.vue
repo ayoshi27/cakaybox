@@ -81,6 +81,7 @@ const resetFormValue = () => {
 
 const onValidationSuccess = async () => {
   await executePostExpend();
+  closeAddExpendDialog();
   emit("added-expend");
 };
 
@@ -113,18 +114,18 @@ const handleClickFavoriteItem = (item: FavoriteExpendItem) => {
   favoriteItemsRef.value?.hidePopover();
 };
 
-const { execute: executePostExpend } = usePostData(
+const { execute: executePostExpend, status: postExpendStatus } = usePostData(
   "expends",
   postExpendRequestBody
 );
 
-defineExpose({ closeAddExpendDialog });
 
 await fetchFavoriteExpendItems();
 </script>
 
 <template>
   <BaseDialog
+    :isLoading="postExpendStatus === 'pending'"
     @close="resetFormValue"
     ref="dialogRef"
   >
