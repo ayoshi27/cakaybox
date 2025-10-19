@@ -33,12 +33,16 @@ const applyFilter = () => {
     budgetIdList: budget.value,
     isProcessedList: processed.value.map((item) => Boolean(item)),
   });
-  dialogRef.value?.closeDialog();
+  closeDialog();
 };
 
 const filterButtonIcon = computed(() => {
   return isFiltered ? "mdi:filter" : "mdi:filter-outline";
 });
+
+const closeDialog = () => {
+  dialogRef.value?.closeDialog();
+};
 
 const emit = defineEmits(["added-expend", "apply-filter"]);
 </script>
@@ -54,12 +58,12 @@ const emit = defineEmits(["added-expend", "apply-filter"]);
           :name="filterButtonIcon"
           class="filter-icon"
         />
-        フィルター</BaseButton
-      >
+        {{ isMobile ? "" : "フィルター" }}
+      </BaseButton>
     </template>
     <template #contents>
       <div class="dialog-header">
-        <h1 class="dialog-title">支出を絞り込んで表示</h1>
+        <h1 class="dialog-title">支出の絞り込み</h1>
         <BaseButton>
           <icon
             name="mdi:heart-outline"
@@ -112,6 +116,12 @@ const emit = defineEmits(["added-expend", "apply-filter"]);
           color="primary"
           >表示</BaseButton
         >
+        <BaseButton
+          type="button"
+          color="normal"
+          @click="closeDialog"
+          >キャンセル</BaseButton
+        >
       </div>
     </template>
   </BaseDialog>
@@ -145,6 +155,9 @@ const emit = defineEmits(["added-expend", "apply-filter"]);
 }
 
 .dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
   margin-top: 8px;
 }
 </style>

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { isMobile } from "@/composables/useBreakPoints";
 defineProps({
   title: {
     type: String,
