@@ -6,6 +6,7 @@ import type {
   CustomCountingItem,
   MonthlyCalculatedPriceForCategory,
 } from "~/types/custom-counting-item.type";
+import { breakpoints } from "@/composables/useBreakPoints";
 
 const props = defineProps({
   yearMonth: {
@@ -92,6 +93,10 @@ await Promise.all([
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .base-card {

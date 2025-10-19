@@ -1,25 +1,31 @@
 <script lang="ts" setup>
-
+import { isMobile } from "@/composables/useBreakPoints";
 defineProps({
   title: {
     type: String,
-  }
+  },
 });
-defineEmits(['prev', 'next']);
-
+defineEmits(["prev", "next"]);
 </script>
 
 <template>
   <div class="period-controller">
     <BaseButton @click="$emit('prev')">
-      <Icon name="mdi:chevron-left" class="chevron-icon" />前月
+      <Icon
+        name="mdi:chevron-left"
+        class="chevron-icon"
+      />
+      {{ isMobile ? "" : "前月" }}
     </BaseButton>
     <h1 class="current-year-month">
       {{ title }}
     </h1>
     <BaseButton @click="$emit('next')">
-      翌月
-      <Icon name="mdi:chevron-right" class="chevron-icon" />
+      {{ isMobile ? '' : '翌月' }}
+      <Icon
+        name="mdi:chevron-right"
+        class="chevron-icon"
+      />
     </BaseButton>
   </div>
 </template>

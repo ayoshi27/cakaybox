@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
+import { isMobile } from "@/composables/useBreakPoints";
 
 const route = useRoute();
 const yearMonth = route.params.yearMonth as string;
 const periodControllerTitle = computed(() => {
   const formatedYearMonth = dayjs(yearMonth).format("YYYY年MM月");
+
+  if (isMobile) return formatedYearMonth;
   return `${formatedYearMonth}の支出一覧`;
 });
 const toCountingPageButtonLabel = computed(() => {
   const formatedYearMonth = dayjs(yearMonth).format("YYYY年MM月");
+
+  if (isMobile) return "支出集計";
   return `${formatedYearMonth}の支出集計`;
 });
 

@@ -31,10 +31,6 @@ const tableLayoutClass =
 .table-container {
   width: 100%;
   overflow: auto;
-
-  @media screen and (max-width: 400px) {
-    height: calc(100dvh - 40px - (15px * 2) - 60px - (56px + 16px));
-  }
 }
 
 .base-table {

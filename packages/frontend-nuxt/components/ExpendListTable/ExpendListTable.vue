@@ -13,6 +13,7 @@ import { filterExpends } from "./ExpendListTable.modules";
 import type { FilterConditionForExpendList } from "./ExpendListTable.types";
 import { initialFilterValues } from "../ExpendListTable/ExpendListTable.const";
 import LoadingOverlay from "../base/LoadingOverlay.vue";
+import { isMobile } from "@/composables/useBreakPoints";
 
 const props = defineProps({
   yearMonth: {
@@ -173,7 +174,10 @@ await fetchInitialSelectOptions();
     >
     </ExpendAddDialog>
     <div class="filter-container">
-      <div class="price-sum">
+      <div
+        v-if="!isMobile"
+        class="price-sum"
+      >
         <span class="price-sum-label">表示中支出の料金合計： </span>
         {{ formatPrice(getSumPrice(filteredExpends)) }}
       </div>
@@ -199,11 +203,36 @@ await fetchInitialSelectOptions();
         <th class="date-th-cell">日付</th>
         <th class="price-th-cell">料金</th>
         <th class="description-th-cell">内容</th>
-        <th class="category-th-cell">カテゴリー</th>
-        <th class="payer-th-cell">支払者</th>
-        <th class="payment-method-th-cell">支払方法</th>
-        <th class="budget-th-cell">支払元</th>
-        <th class="processed-th-cell">精算済</th>
+        <th
+          v-if="!isMobile"
+          class="category-th-cell"
+        >
+          カテゴリー
+        </th>
+        <th
+          v-if="!isMobile"
+          class="payer-th-cell"
+        >
+          支払者
+        </th>
+        <th
+          v-if="!isMobile"
+          class="payment-method-th-cell"
+        >
+          支払方法
+        </th>
+        <th
+          v-if="!isMobile"
+          class="budget-th-cell"
+        >
+          支払元
+        </th>
+        <th
+          v-if="!isMobile"
+          class="processed-th-cell"
+        >
+          精算済
+        </th>
         <th class="edit-th-cell">編集</th>
         <th class="delete-th-cell">削除</th>
       </tr>
@@ -218,7 +247,7 @@ await fetchInitialSelectOptions();
         </td>
         <td class="price-cell">{{ formatPrice(expend.price) }}</td>
         <td>{{ expend.description }}</td>
-        <td>
+        <td v-if="!isMobile">
           <div class="category-cell-content">
             <Icon
               name="mdi:local-offer"
@@ -228,10 +257,10 @@ await fetchInitialSelectOptions();
             {{ expend.category.name }}
           </div>
         </td>
-        <td>{{ expend.payer.name }}</td>
-        <td>{{ expend.paymentMethod.name }}</td>
-        <td>{{ expend.budget.name }}</td>
-        <td>
+        <td v-if="!isMobile">{{ expend.payer.name }}</td>
+        <td v-if="!isMobile">{{ expend.paymentMethod.name }}</td>
+        <td v-if="!isMobile">{{ expend.budget.name }}</td>
+        <td v-if="!isMobile">
           <Icon
             name="mdi:check-circle"
             :class="['processed-icon', { processed: expend.processed }]"
