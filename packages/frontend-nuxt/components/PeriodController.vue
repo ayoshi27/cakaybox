@@ -35,7 +35,7 @@ defineEmits(["prev", "next"]);
   align-items: center;
   gap: 16px;
 
-  @media (max-width: 400px) {
+  @media (max-width: 640px) {
     gap: 4px;
   }
 }
@@ -44,8 +44,8 @@ defineEmits(["prev", "next"]);
   font-size: 24px;
   font-weight: bold;
 
-  @media screen and (max-width: 400px) {
-    font-size: 16px;
+  @media screen and (max-width: 640px) {
+    font-size: 20px;
   }
 }
 
