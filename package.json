@@ -12,7 +12,8 @@
     "build:app": "pnpm --filter @cakaybox/frontend run build",
     "start:prod:api": "pnpm --filter @cakaybox/backend run start:prod",
     "start:app": "pnpm --filter @cakaybox/frontend run start",
-    "dev:nuxt": "pnpm --filter @cakaybox/frontend-nuxt run dev",
+    "build:nuxt": "pnpm --filter @cakaybox/frontend-nuxt run build",
+    "preview:nuxt": "pnpm --filter @cakaybox/frontend-nuxt run preview",
     "sample": "node sample.js"
   },
   "dependencies": {
