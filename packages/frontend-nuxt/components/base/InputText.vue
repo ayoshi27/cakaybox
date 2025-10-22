@@ -2,6 +2,7 @@
 type Props = {
   label?: string;
   autoFocus?: boolean;
+  type?: string;
 };
 const { label, autoFocus = false } = defineProps<Props>();
 const model = defineModel();
@@ -12,7 +13,7 @@ const model = defineModel();
     <span v-if="label">{{ `${label}：` }}</span>
     <input
       class="input-elemment"
-      type="text"
+      :type="type || 'text'"
       v-model="model"
       :autofocus="autoFocus"
     />

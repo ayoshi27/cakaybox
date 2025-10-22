@@ -184,6 +184,7 @@ await fetchFavoriteExpendItems();
         />
         <BaseInputText
           label="料金"
+          type="number"
           v-bind="priceProps"
           v-model.number="price"
           auto-focus
