@@ -18,7 +18,8 @@ export default defineNuxtConfig({
           resolve(__dirname, '..'),     // ワークスペースルート
           resolve(__dirname, '../..'),     
         ]
-      }
+      },
+      allowedHosts: ['cakaybox.com']
     }
   },
   modules: [
