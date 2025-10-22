@@ -5,6 +5,18 @@ export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
+  app: {
+    head: {
+      title: 'Cakaybox', // default fallback title
+      htmlAttrs: {
+        lang: 'ja',
+      },
+      link: [
+        { rel: 'apple-touch-icon', type: 'image/png', href: '/apple-icon.png' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      ],
+    },
+  },
   runtimeConfig: {
     public: {
       apiBase: '/api'
