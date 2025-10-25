@@ -6,7 +6,7 @@ import type {
   CustomCountingItem,
   MonthlyCalculatedPriceForCategory,
 } from "~/types/custom-counting-item.type";
-import { breakpoints } from "@/composables/useBreakPoints";
+// import { breakpoints } from "@/composables/useBreakPoints";
 
 const props = defineProps({
   yearMonth: {

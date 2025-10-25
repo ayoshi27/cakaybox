@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@ts-rest/core": "^3.33.0",
-    "nuxt": "^3.13.2",
+    "nuxt": "^4.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

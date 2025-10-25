@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
+  srcDir: 'app/',
   app: {
     head: {
       title: 'Cakaybox', // default fallback title
@@ -19,7 +20,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: '/api'
+      // apiBase: '/api'
+      apiBase: 'http://localhost:3001'
     }
   },
   vite: {

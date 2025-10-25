@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { formatDate, formatPrice } from "~/utils/format";
-import { tableDateCellCssClass, categoryIconStyle } from "~/utils/style";
-import { useAsyncApiFetchData } from "~/utils/api";
+import { formatDate, formatPrice } from "@/utils/format";
+import { tableDateCellCssClass, categoryIconStyle } from "@/utils/style";
+import { useAsyncApiFetchData } from "@/utils/api";
 import type { Expend } from "~/types/expend.type";
 import type { Category } from "~/types/category.type";
 import type { PaymentMethod } from "~/types/payment-method.type";
 import type { Budget } from "~/types/budget.type";
-import ExpendAddDialog from "~/components/ExpendAddDialog.vue";
+import ExpendAddDialog from "@/components/ExpendAddDialog.vue";
 import ExpendUpdateDialog from "../ExpendUpdateDialog.vue";
 import ExpendFilterDialog from "../ExpendFilterDialog.vue";
 import { filterExpends } from "./ExpendListTable.modules";

@@ -1,4 +1,4 @@
-import type { Expend } from "~/types/expend.type";
+import type { Expend } from "../../types/expend.type";
 import type { FilterConditionForExpendList } from "./ExpendListTable.types";
 
 /**
