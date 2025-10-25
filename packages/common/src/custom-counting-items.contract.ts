@@ -41,6 +41,12 @@ const CustomCountingItemsSchema = z.object({
   ),
 });
 
+const NewCustomCountingItemsSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  price: z.number(),
+});
+
 const c = initContract();
 
 export const customCountingItemsContract = c.router({
@@ -52,4 +58,15 @@ export const customCountingItemsContract = c.router({
     },
     summary: 'カスタム集計項目リストを取得する',
   },
+  newGetList:{
+    method: 'GET',
+    path: '/new-custom-counting-items',
+    query: z.object({
+      yearMonth: z.string(),
+    }),
+    responses: {
+      200: NewCustomCountingItemsSchema.array(),
+    },
+    summary: '新しいカスタム集計項目リストを取得する',
+  }
 });

@@ -53,6 +53,12 @@ const getAnnualCalculatedExpendSchema = zod_1.z.object({
     categoryName: zod_1.z.string(),
     data: zod_1.z.number().array(),
 });
+const MonthlyCalculatedExpendSchema = zod_1.z.object({
+    id: zod_1.z.number(),
+    categoryName: zod_1.z.string(),
+    categoryColorCode: zod_1.z.string(),
+    price: zod_1.z.number(),
+});
 const c = (0, core_1.initContract)();
 exports.expendsContract = c.router({
     getList: {
@@ -121,4 +127,15 @@ exports.expendsContract = c.router({
         }),
         summary: "年間支出の計算結果を取得する",
     },
+    getMonthlyCalculatedExpend: {
+        method: "GET",
+        path: "/expends/monthly-calculated",
+        responses: {
+            200: MonthlyCalculatedExpendSchema.array(),
+        },
+        query: zod_1.z.object({
+            yearMonth: zod_1.z.string(),
+        }),
+        summary: "月間支出のカテゴリ別の計算結果を取得する",
+    }
 });

@@ -1,0 +1,40 @@
+:root {
+  /* primitive tokens */
+  --color-black-normal: #333;
+  --color-gray-lightest: #f9f9f9;
+  --color-gray-light: #dddddd;
+  --color-gray-dark: #bababa;
+  --color-white-normal: #ffffff;
+  --color-blue-normal: #1976d2;
+  --color-blue-dark: #334ae0;
+  --color-red-dark: #e03344;
+
+  /* variant tokens */
+  --color-primary: var(--color-blue-normal);
+
+  /* semantic tokens */
+  --color-text-white: var(--color-white-normal);
+  --color-text-sunday: var(--color-red-dark);
+  --color-text-saturday: var(--color-blue-dark);
+  --color-icon-disabled: var(--color-gray-dark);
+  --color-border-input: var(--color-gray-light);
+
+  --font-size-icon: 24px;
+  --font-size-table-cell: 14px;
+
+  --z-index-overlay: 1000;
+}
+
+/* global styles */
+body {
+  --color-body: var(--color-black-normal);
+
+  font-family: "Noto Sans", Roboto, sans-serif;
+  color: var(--color-body);
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+}

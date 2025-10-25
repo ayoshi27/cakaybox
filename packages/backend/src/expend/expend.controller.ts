@@ -113,4 +113,20 @@ export class ExpendController implements NestControllerInterface<typeof c> {
       body: await this.expendService.getAnnualCalculatedExpend({ where }),
     };
   }
+
+  @TsRest(c.getMonthlyCalculatedExpend)
+  async getMonthlyCalculatedExpend(
+    @TsRestRequest()
+    { query: { yearMonth } }: RequestShapes['getMonthlyCalculatedExpend'],
+  ) {
+    const where = {
+      date: {
+        startsWith: yearMonth,
+      },
+    };
+    return {
+      status: 200 as const,
+      body: await this.expendService.getMonthlyCalculatedExpend({ where }),
+    };
+  }
 }

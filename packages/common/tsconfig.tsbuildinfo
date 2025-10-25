@@ -1,0 +1,1 @@
+{"root":["./src/budgets.contract.ts","./src/categories.contract.ts","./src/counting-items.contract.ts","./src/custom-counting-items.contract.ts","./src/expends.contract.ts","./src/favorite-expend-item.contract.ts","./src/index.ts","./src/payers.contract.ts","./src/payment-methods.contract.ts"],"version":"5.9.3"}

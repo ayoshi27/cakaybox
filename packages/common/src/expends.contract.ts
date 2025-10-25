@@ -55,6 +55,13 @@ const getAnnualCalculatedExpendSchema = z.object({
   data: z.number().array(),
 });
 
+const MonthlyCalculatedExpendSchema = z.object({
+  id: z.number(),
+  categoryName: z.string(),
+  categoryColorCode: z.string(),
+  price: z.number(),
+});
+
 const c = initContract();
 
 export const expendsContract = c.router({
@@ -124,4 +131,15 @@ export const expendsContract = c.router({
     }),
     summary: "年間支出の計算結果を取得する",
   },
+  getMonthlyCalculatedExpend: {
+    method: "GET",
+    path: "/expends/monthly-calculated",
+    responses: {
+      200: MonthlyCalculatedExpendSchema.array(),
+    },
+    query: z.object({
+      yearMonth: z.string(),
+    }),
+    summary: "月間支出のカテゴリ別の計算結果を取得する",
+  }
 });

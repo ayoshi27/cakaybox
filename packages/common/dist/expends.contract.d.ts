@@ -9,6 +9,8 @@ export declare const expendsContract: {
             yearMonth: string;
         }>;
         summary: "支出を取得する";
+        method: "GET";
+        path: "/expends";
         responses: {
             200: z.ZodArray<z.ZodObject<{
                 id: z.ZodNumber;
@@ -107,11 +109,39 @@ export declare const expendsContract: {
                 price: number;
             }>, "many">;
         };
-        method: "GET";
-        path: "/expends";
     };
     createExpend: {
         summary: "支出を新規登録する";
+        method: "POST";
+        body: z.ZodObject<{
+            price: z.ZodNumber;
+            description: z.ZodString;
+            date: z.ZodString;
+            categoryId: z.ZodNumber;
+            payerId: z.ZodNumber;
+            budgetId: z.ZodNumber;
+            paymentMethodId: z.ZodNumber;
+            processed: z.ZodBoolean;
+        }, "strip", z.ZodTypeAny, {
+            description: string;
+            date: string;
+            processed: boolean;
+            price: number;
+            categoryId: number;
+            payerId: number;
+            budgetId: number;
+            paymentMethodId: number;
+        }, {
+            description: string;
+            date: string;
+            processed: boolean;
+            price: number;
+            categoryId: number;
+            payerId: number;
+            budgetId: number;
+            paymentMethodId: number;
+        }>;
+        path: "/expends";
         responses: {
             201: z.ZodObject<{
                 id: z.ZodNumber;
@@ -145,39 +175,39 @@ export declare const expendsContract: {
                 paymentMethodId: number;
             }>;
         };
-        method: "POST";
-        body: z.ZodObject<{
-            price: z.ZodNumber;
-            description: z.ZodString;
-            date: z.ZodString;
-            categoryId: z.ZodNumber;
-            payerId: z.ZodNumber;
-            budgetId: z.ZodNumber;
-            paymentMethodId: z.ZodNumber;
-            processed: z.ZodBoolean;
-        }, "strip", z.ZodTypeAny, {
-            description: string;
-            date: string;
-            processed: boolean;
-            price: number;
-            categoryId: number;
-            payerId: number;
-            budgetId: number;
-            paymentMethodId: number;
-        }, {
-            description: string;
-            date: string;
-            processed: boolean;
-            price: number;
-            categoryId: number;
-            payerId: number;
-            budgetId: number;
-            paymentMethodId: number;
-        }>;
-        path: "/expends";
     };
     updateExpend: {
         summary: "支出を更新する";
+        method: "PATCH";
+        body: z.ZodObject<{
+            price: z.ZodOptional<z.ZodNumber>;
+            description: z.ZodOptional<z.ZodString>;
+            date: z.ZodOptional<z.ZodString>;
+            categoryId: z.ZodOptional<z.ZodNumber>;
+            payerId: z.ZodOptional<z.ZodNumber>;
+            budgetId: z.ZodOptional<z.ZodNumber>;
+            paymentMethodId: z.ZodOptional<z.ZodNumber>;
+            processed: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            description?: string | undefined;
+            date?: string | undefined;
+            processed?: boolean | undefined;
+            price?: number | undefined;
+            categoryId?: number | undefined;
+            payerId?: number | undefined;
+            budgetId?: number | undefined;
+            paymentMethodId?: number | undefined;
+        }, {
+            description?: string | undefined;
+            date?: string | undefined;
+            processed?: boolean | undefined;
+            price?: number | undefined;
+            categoryId?: number | undefined;
+            payerId?: number | undefined;
+            budgetId?: number | undefined;
+            paymentMethodId?: number | undefined;
+        }>;
+        path: "/expends/:id";
         responses: {
             200: z.ZodObject<{
                 id: z.ZodNumber;
@@ -211,39 +241,12 @@ export declare const expendsContract: {
                 paymentMethodId: number;
             }>;
         };
-        method: "PATCH";
-        body: z.ZodObject<{
-            price: z.ZodOptional<z.ZodNumber>;
-            description: z.ZodOptional<z.ZodString>;
-            date: z.ZodOptional<z.ZodString>;
-            categoryId: z.ZodOptional<z.ZodNumber>;
-            payerId: z.ZodOptional<z.ZodNumber>;
-            budgetId: z.ZodOptional<z.ZodNumber>;
-            paymentMethodId: z.ZodOptional<z.ZodNumber>;
-            processed: z.ZodOptional<z.ZodBoolean>;
-        }, "strip", z.ZodTypeAny, {
-            price?: number | undefined;
-            description?: string | undefined;
-            date?: string | undefined;
-            categoryId?: number | undefined;
-            payerId?: number | undefined;
-            budgetId?: number | undefined;
-            paymentMethodId?: number | undefined;
-            processed?: boolean | undefined;
-        }, {
-            price?: number | undefined;
-            description?: string | undefined;
-            date?: string | undefined;
-            categoryId?: number | undefined;
-            payerId?: number | undefined;
-            budgetId?: number | undefined;
-            paymentMethodId?: number | undefined;
-            processed?: boolean | undefined;
-        }>;
-        path: "/expends/:id";
     };
     deleteExpend: {
         summary: "支出を削除する";
+        method: "DELETE";
+        body: null;
+        path: "/expends/:id";
         responses: {
             200: z.ZodObject<{
                 message: z.ZodString;
@@ -260,9 +263,6 @@ export declare const expendsContract: {
                 message: string;
             }>;
         };
-        method: "DELETE";
-        body: null;
-        path: "/expends/:id";
     };
     getAnnualCalculatedExpend: {
         query: z.ZodObject<{
@@ -273,19 +273,49 @@ export declare const expendsContract: {
             year: string;
         }>;
         summary: "年間支出の計算結果を取得する";
+        method: "GET";
+        path: "/expends/annual-calculated";
         responses: {
             200: z.ZodArray<z.ZodObject<{
                 categoryName: z.ZodString;
                 data: z.ZodArray<z.ZodNumber, "many">;
             }, "strip", z.ZodTypeAny, {
-                data: number[];
                 categoryName: string;
+                data: number[];
             }, {
-                data: number[];
                 categoryName: string;
+                data: number[];
             }>, "many">;
         };
+    };
+    getMonthlyCalculatedExpend: {
+        query: z.ZodObject<{
+            yearMonth: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            yearMonth: string;
+        }, {
+            yearMonth: string;
+        }>;
+        summary: "月間支出のカテゴリ別の計算結果を取得する";
         method: "GET";
-        path: "/expends/annual-calculated";
+        path: "/expends/monthly-calculated";
+        responses: {
+            200: z.ZodArray<z.ZodObject<{
+                id: z.ZodNumber;
+                categoryName: z.ZodString;
+                categoryColorCode: z.ZodString;
+                price: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                id: number;
+                price: number;
+                categoryName: string;
+                categoryColorCode: string;
+            }, {
+                id: number;
+                price: number;
+                categoryName: string;
+                categoryColorCode: string;
+            }>, "many">;
+        };
     };
 };

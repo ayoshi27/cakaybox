@@ -2,6 +2,8 @@ import { z } from 'zod';
 export declare const paymentMethodsContract: {
     getList: {
         summary: "支払方法リストを取得する";
+        method: "GET";
+        path: "/payment-methods";
         responses: {
             200: z.ZodArray<z.ZodObject<{
                 id: z.ZodNumber;
@@ -17,7 +19,5 @@ export declare const paymentMethodsContract: {
                 payerId: number;
             }>, "many">;
         };
-        method: "GET";
-        path: "/payment-methods";
     };
 };
