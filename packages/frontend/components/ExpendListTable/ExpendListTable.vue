@@ -11,7 +11,7 @@ import ExpendUpdateDialog from "../ExpendUpdateDialog.vue";
 import ExpendFilterDialog from "../ExpendFilterDialog.vue";
 import { filterExpends } from "./ExpendListTable.modules";
 import type { FilterConditionForExpendList } from "./ExpendListTable.types";
-import { initialFilterValues } from "../ExpendListTable/ExpendListTable.const";
+import { initialFilterValues } from "./ExpendListTable.const";
 import LoadingOverlay from "../base/LoadingOverlay.vue";
 
 const props = defineProps({

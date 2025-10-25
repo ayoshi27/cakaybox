@@ -6,14 +6,12 @@
     "prepare": "pnpm run compile",
     "compile": "tsc -b tsconfig.build.json",
     "dev:api": "pnpm --filter @cakaybox/backend run start:dev",
-    "dev:app": "pnpm --filter @cakaybox/frontend run dev",
     "seed": "pnpm --filter @cakaybox/backend run seed",
     "build:api": "pnpm --filter @cakaybox/backend run build",
-    "build:app": "pnpm --filter @cakaybox/frontend run build",
     "start:prod:api": "pnpm --filter @cakaybox/backend run start:prod",
-    "start:app": "pnpm --filter @cakaybox/frontend run start",
-    "build:nuxt": "pnpm --filter @cakaybox/frontend-nuxt run build",
-    "preview:nuxt": "pnpm --filter @cakaybox/frontend-nuxt run preview",
+    "dev:app": "pnpm --filter @cakaybox/frontend run dev",
+    "build:app": "pnpm --filter @cakaybox/frontend run build",
+    "preview:app": "pnpm --filter @cakaybox/frontend run preview",
     "sample": "node sample.js"
   },
   "dependencies": {

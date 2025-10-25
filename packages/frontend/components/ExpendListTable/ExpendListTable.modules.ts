@@ -1,5 +1,5 @@
 import type { Expend } from "~/types/expend.type";
-import type { FilterConditionForExpendList } from "../ExpendListTable/ExpendListTable.types";
+import type { FilterConditionForExpendList } from "./ExpendListTable.types";
 
 /**
  * 支出一覧を渡される条件でフィルターする
