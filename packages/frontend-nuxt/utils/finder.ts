@@ -9,6 +9,6 @@ export const getPayerIdByPaymentMethodId = (
   paymentMethods: PaymentMethod[] | null,
 ) => {
   return paymentMethods?.find(
-    (paymentMethod) => paymentMethod.payerId === paymentMethodId,
+    (paymentMethod) => paymentMethod.id === paymentMethodId,
   )?.payerId;
 };
