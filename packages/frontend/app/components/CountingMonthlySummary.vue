@@ -30,6 +30,16 @@ const {
   }
 );
 
+const copy = async () => {
+  const text =
+    monthlyCalculatedPriceForCategory.value?.reduce(
+      (acc, item) => acc + `${item.categoryName}\t${item.price}\n`,
+      ""
+    ) ?? "";
+  await navigator.clipboard.writeText(text);
+  alert("集計内容をコピーしました");
+};
+
 await Promise.all([
   fetchCustomCountingItems(),
   fetchMonthlyCalculatedPriceForCategory(),
@@ -58,6 +68,9 @@ await Promise.all([
       </base-table>
     </base-card>
     <base-card title="カテゴリー別集計一覧">
+      <template #titleControl>
+        <BaseButton @click="copy">集計内容をコピーする</BaseButton>
+      </template>
       <base-table>
         <thead>
           <tr>
