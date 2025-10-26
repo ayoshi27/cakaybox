@@ -48,6 +48,7 @@ const navigateToExpendsPage = () => {
     <Suspense>
       <template #default>
         <counting-monthly-summary
+          class="counting-monthly-summary"
           :yearMonth="yearMonth"
           :key="yearMonth"
         />
@@ -68,5 +69,9 @@ const navigateToExpendsPage = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.counting-monthly-summary {
+  margin-top: 16px;
 }
 </style>
