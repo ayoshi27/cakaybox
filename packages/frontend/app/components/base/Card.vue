@@ -6,11 +6,11 @@ defineProps<{
 
 <template>
   <section class="base-card">
-    <div class="card-title">
-      <h2
-        v-if="title"
-        class="title"
-      >
+    <div
+      v-if="title"
+      class="card-title"
+    >
+      <h2 class="title">
         {{ title }}
       </h2>
       <slot name="titleControl" />
