@@ -48,8 +48,8 @@ await Promise.all([
 
 <template>
   <div class="counting-list-container">
-    <base-card title="カスタム集計一覧">
-      <base-table>
+    <BaseCard title="カスタム集計一覧">
+      <BaseTable>
         <thead>
           <tr>
             <th>集計項目名</th>
@@ -65,13 +65,13 @@ await Promise.all([
             <td>{{ formatPrice(customCountingItem.price) }}</td>
           </tr>
         </tbody>
-      </base-table>
-    </base-card>
-    <base-card title="カテゴリー別集計一覧">
+      </BaseTable>
+    </BaseCard>
+    <BaseCard title="カテゴリー別集計一覧">
       <template #titleControl>
         <BaseButton @click="copy">集計内容をコピーする</BaseButton>
       </template>
-      <base-table>
+      <BaseTable>
         <thead>
           <tr>
             <th>カテゴリー名</th>
@@ -96,8 +96,8 @@ await Promise.all([
             <td>{{ formatPrice(category.price) }}</td>
           </tr>
         </tbody>
-      </base-table>
-    </base-card>
+      </BaseTable>
+    </BaseCard>
   </div>
 </template>
 
@@ -112,7 +112,7 @@ await Promise.all([
   }
 }
 
-.base-card {
+.BaseCard {
   margin-top: 16px;
 }
 

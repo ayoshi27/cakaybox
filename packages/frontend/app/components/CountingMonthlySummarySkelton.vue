@@ -3,8 +3,8 @@
 <template>
   <BaseLoadingOverlay />
   <div class="counting-list-container">
-    <base-card title="カスタム集計一覧">
-      <base-table>
+    <BaseCard title="カスタム集計一覧">
+      <BaseTable>
         <thead>
           <tr>
             <th>集計項目名</th>
@@ -20,10 +20,10 @@
             <td>---</td>
           </tr>
         </tbody>
-      </base-table>
-    </base-card>
-    <base-card title="カテゴリー別集計一覧">
-      <base-table>
+      </BaseTable>
+    </BaseCard>
+    <BaseCard title="カテゴリー別集計一覧">
+      <BaseTable>
         <thead>
           <tr>
             <th>カテゴリー名</th>
@@ -47,8 +47,8 @@
             <td>---</td>
           </tr>
         </tbody>
-      </base-table>
-    </base-card>
+      </BaseTable>
+    </BaseCard>
   </div>
 </template>
 
