@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onUnmounted } from "vue";
 import LoadingOverlay from "./LoadingOverlay.vue";
 
 type Props = {
@@ -7,12 +8,42 @@ type Props = {
 
 const { isLoading = false } = defineProps<Props>();
 
+let bodyScrollLockDepth = 0;
+let previousBodyOverflow: string | null = null;
+
+const lockBodyScroll = () => {
+  if (typeof document === "undefined") return;
+  if (bodyScrollLockDepth === 0) {
+    previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+  }
+  bodyScrollLockDepth += 1;
+};
+
+const unlockBodyScroll = () => {
+  if (typeof document === "undefined" || bodyScrollLockDepth === 0) return;
+  bodyScrollLockDepth -= 1;
+  if (bodyScrollLockDepth === 0) {
+    document.body.style.overflow = previousBodyOverflow ?? "";
+    previousBodyOverflow = null;
+  }
+};
+
 const dialog = useTemplateRef<HTMLDialogElement>("dialog");
+let hasLockedBodyScroll = false;
 const showDialog = () => {
   dialog.value?.showModal();
+  if (!hasLockedBodyScroll) {
+    lockBodyScroll();
+    hasLockedBodyScroll = true;
+  }
 };
 const closeDialog = () => {
   dialog.value?.close();
+  if (hasLockedBodyScroll) {
+    unlockBodyScroll();
+    hasLockedBodyScroll = false;
+  }
 };
 
 defineSlots<{
@@ -20,7 +51,22 @@ defineSlots<{
   contents(props: { closeDialog: typeof closeDialog }): any;
 }>();
 
-defineEmits(["close"]);
+const emit = defineEmits(["close"]);
+
+const handleClose = () => {
+  if (hasLockedBodyScroll) {
+    unlockBodyScroll();
+    hasLockedBodyScroll = false;
+  }
+  emit("close");
+};
+
+onUnmounted(() => {
+  if (hasLockedBodyScroll) {
+    unlockBodyScroll();
+    hasLockedBodyScroll = false;
+  }
+});
 defineExpose({ closeDialog, showDialog });
 </script>
 
@@ -32,7 +78,7 @@ defineExpose({ closeDialog, showDialog });
   <dialog
     ref="dialog"
     class="base-dialog"
-    @close="$emit('close')"
+    @close="handleClose"
   >
     <LoadingOverlay v-if="isLoading"></LoadingOverlay>
     <div class="dialog-contents">
