@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: '/api'
+      apiBase: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001'
     }
   },
   vite: {
