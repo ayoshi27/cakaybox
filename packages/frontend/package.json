@@ -11,9 +11,9 @@
     "test": "vitest"
   },
   "dependencies": {
-    "nuxt": "^4.2.0",
     "@vee-validate/valibot": "^4.15.1",
     "dayjs": "latest",
+    "nuxt": "^4.2.0",
     "valibot": "^1.1.0",
     "vee-validate": "^4.15.1",
     "vue": "latest",

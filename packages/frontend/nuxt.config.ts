@@ -1,43 +1,47 @@
-import { resolve } from 'path'
+import { resolve } from "path";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  srcDir: 'app/',
+  srcDir: "app/",
   app: {
     head: {
-      title: 'Cakaybox', // default fallback title
+      title: "Cakaybox", // default fallback title
       htmlAttrs: {
-        lang: 'ja',
+        lang: "ja",
       },
       link: [
-        { rel: 'apple-touch-icon', type: 'image/png', href: '/apple-icon.png' },
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: "apple-touch-icon", type: "image/png", href: "/apple-icon.png" },
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       ],
     },
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001'
-    }
+      apiBase:
+        process.env.NODE_ENV === "production"
+          ? "/api"
+          : "http://localhost:3001",
+    },
   },
   vite: {
     server: {
       fs: {
         allow: [
-          resolve(__dirname),           // プロジェクトディレクトリ
-          resolve(__dirname, '..'),     // ワークスペースルート
-          resolve(__dirname, '../..'),     
-        ]
+          resolve(__dirname), // プロジェクトディレクトリ
+          resolve(__dirname, ".."), // ワークスペースルート
+          resolve(__dirname, "../.."),
+        ],
       },
-      allowedHosts: ['cakaybox.com']
-    }
+      allowedHosts: ["cakaybox.com"],
+    },
   },
   modules: [
     "@nuxt/icon",
-    '@vueuse/nuxt',
+    "@vueuse/nuxt",
+    "@nuxt/test-utils/module",
     [
       "@nuxtjs/google-fonts",
       {
@@ -48,7 +52,6 @@ export default defineNuxtConfig({
         },
       },
     ],
-    '@nuxt/test-utils/module'
   ],
   css: ["@/assets/styles/_tokens.css"],
 });
