@@ -29,7 +29,7 @@ export const filterExpends = (
 const stringFilter = (string: string, value: string) => {
   return (
     string.length === 0 ||
-    string.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+    value.toLocaleLowerCase().includes(string.toLocaleLowerCase())
   );
 };
 const arrayFilter = (array: number[], value: number) => {
