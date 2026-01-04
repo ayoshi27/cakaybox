@@ -32,12 +32,12 @@ const [price, priceProps] = defineField("price");
 // フォーム入力値
 const formValueDescription = ref("");
 const formValueCategory = ref<number | undefined>(
-  selectOptions.categories?.[0].id
+  selectOptions.categories?.[0]?.id
 );
 const formValuePaymentMethod = ref<number | undefined>(
-  selectOptions.paymentMethods?.[0].id
+  selectOptions.paymentMethods?.[0]?.id
 );
-const formValueBudget = ref<number | undefined>(selectOptions.budgets?.[0].id);
+const formValueBudget = ref<number | undefined>(selectOptions.budgets?.[0]?.id);
 const formValueDate = ref(dayjs().format("YYYY-MM-DD"));
 const formValueIsProcessed = ref(false);
 
@@ -72,9 +72,9 @@ const resetFormValue = () => {
   setFieldValue("price", 0);
   price.value = undefined;
   formValueDescription.value = "";
-  formValueCategory.value = selectOptions.categories?.[0].id;
-  formValuePaymentMethod.value = selectOptions.paymentMethods?.[0].id;
-  formValueBudget.value = selectOptions.budgets?.[0].id;
+  formValueCategory.value = selectOptions.categories?.[0]?.id;
+  formValuePaymentMethod.value = selectOptions.paymentMethods?.[0]?.id;
+  formValueBudget.value = selectOptions.budgets?.[0]?.id;
   formValueIsProcessed.value = false;
   resetForm();
 };

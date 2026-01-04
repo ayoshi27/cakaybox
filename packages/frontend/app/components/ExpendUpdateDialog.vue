@@ -6,7 +6,7 @@ import type { SelectOptions } from "./ExpendListTable/ExpendListTable.vue";
 import { getPayerIdByPaymentMethodId } from "~/utils/finder";
 
 const dialogRef = ref<InstanceType<typeof BaseDialog>>();
-const emit = defineEmits(["updated-expend"]);
+const emit = defineEmits(["updated-expend", "close"]);
 
 type Props = {
   expend: Expend;
@@ -65,6 +65,7 @@ const showDialog = () => {
 
 const closeUpdateExpendDialog = () => {
   dialogRef.value?.closeDialog();
+  emit("close");
 };
 
 const { execute: executePutExpend, status: putExpendStatus } = usePatchData(

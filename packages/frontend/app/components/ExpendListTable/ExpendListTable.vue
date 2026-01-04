@@ -21,8 +21,6 @@ const props = defineProps({
   },
 });
 
-const expendAddDialogRef =
-  useTemplateRef<InstanceType<typeof ExpendAddDialog>>("expendAddDialogRef");
 const expendUpdateDialogRef = useTemplateRef<
   InstanceType<typeof ExpendUpdateDialog>
 >("expendUpdateDialogRef");
@@ -130,6 +128,10 @@ const handlwClickEditButton = async (expend: Expend) => {
   expendUpdateDialogRef.value?.showDialog();
 };
 
+const handleExpendUpdateDialogclose = () => {
+  selectedExpend.value = null;
+};
+
 /**
  * ダイアログから支出を編集した際の処理
  * 支出一覧を更新してダイアログを閉じる
@@ -169,7 +171,6 @@ await fetchInitialSelectOptions();
     <ExpendAddDialog
       :select-options="selectOptions"
       @added-expend="onAddedExpend"
-      ref="expendAddDialogRef"
     >
     </ExpendAddDialog>
     <div class="filter-container">
@@ -283,6 +284,7 @@ await fetchInitialSelectOptions();
     v-if="selectedExpend !== null"
     :expend="selectedExpend"
     @updated-expend="onUpdatedExpend"
+    @close="handleExpendUpdateDialogclose"
     :select-options="selectOptions"
     ref="expendUpdateDialogRef"
   />
