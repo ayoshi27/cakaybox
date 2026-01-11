@@ -64,7 +64,7 @@ const showDialog = () => {
 };
 
 const closeUpdateExpendDialog = () => {
-  dialogRef.value?.closeDialog();
+  resetFormValue();
   emit("close");
 };
 
@@ -82,7 +82,7 @@ defineExpose({
 <template>
   <BaseDialog
     :is-loading="putExpendStatus === 'pending'"
-    @close="resetFormValue"
+    @close="closeUpdateExpendDialog"
     ref="dialogRef"
   >
     <template #contents>

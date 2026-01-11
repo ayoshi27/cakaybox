@@ -44,6 +44,7 @@ const closeDialog = () => {
     unlockBodyScroll();
     hasLockedBodyScroll = false;
   }
+  emit("close");
 };
 
 defineSlots<{
@@ -52,14 +53,6 @@ defineSlots<{
 }>();
 
 const emit = defineEmits(["close"]);
-
-const handleClose = () => {
-  if (hasLockedBodyScroll) {
-    unlockBodyScroll();
-    hasLockedBodyScroll = false;
-  }
-  emit("close");
-};
 
 onUnmounted(() => {
   if (hasLockedBodyScroll) {
@@ -78,7 +71,8 @@ defineExpose({ closeDialog, showDialog });
   <dialog
     ref="dialog"
     class="base-dialog"
-    @close="handleClose"
+    closedby="none"
+    @keyup.esc="closeDialog"
   >
     <LoadingOverlay v-if="isLoading"></LoadingOverlay>
     <div class="dialog-contents">
